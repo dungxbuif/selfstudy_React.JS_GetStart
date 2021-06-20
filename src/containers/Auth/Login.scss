@@ -5,12 +5,17 @@
   );
   height: 100vh;
   .login-container {
-    width: 400px;
-    height: 100%;
+    width: 300px;
+    height: 450px;
     margin:  0 auto;
-
     background: white; 
     border-radius: 25px;
+		position: absolute;
+		margin: auto;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0;
   }
   .login-content {
     padding: 10px;
@@ -23,6 +28,21 @@
     }
     .login-input {
       margin: 7px 0;
+
+			.custom-password {
+				position: relative;
+
+				i {
+					position: absolute;
+					right: 0;
+					top: 50%;
+					right: 7px;
+					transform: translate(0,-50%);
+					cursor: pointer;
+				}
+
+			}
+
     }
     .btn-login{
       width: 100%;
