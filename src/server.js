@@ -1,9 +1,9 @@
-import express from "express";
-import bodyParser from "body-parser";
-import viewEngine from "./config/viewEngine";
-import route from "./route";
+const express = require("express");
+const bodyParser = require("body-parser");
+const viewEngine = require("./config/viewEngine");
+const route = require("./route");
 require('dotenv').config();
-import connectDB from "./config/connectDB";
+const connectDB = require("./config/connectDB");
 const app = express();
 
 //config app

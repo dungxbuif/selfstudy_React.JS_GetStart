@@ -1,4 +1,4 @@
-import db from '../models';
+const db = require('../models');
 const getHomePage = async (req, res) => {
     try{
         const data = await db.User.findAll();
