@@ -29,6 +29,12 @@ npx sequelize-cli db:migrate
 
 5. Tạo Seeder: npx sequelize-cli seed:generate --name demo-user
 
-🐱‍🚀 Tài liệu tham khảo sử dụng trong video:
+🐱‍🚀 Tài liệu tham kảo sử dụng:
 - https://sequelize.org/master/manual/migrations.html#installing-the-cli
 - https://mherman.org/blog/node-postgres-sequelize/
+## Lệnh tạo database
+npx sequelize-cli db:migrate
+## Lệnh seed dữ liệu
+
+## Thiết kế bảng CSDL
+https://docs.google.com/spreadsheets/d/175ts9y-bJGAwEUtVEFojJQ4nFCH_lIU0poA0wVjM_lk/edit#gid=0

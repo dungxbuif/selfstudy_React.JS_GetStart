@@ -9,7 +9,7 @@ module.exports = {
       email: 'admin@admin.com',
       address: 'VietNam',
       gender: 1,
-      typeRole: 'ROLE',
+      roleId: 'ROLE',
       keyRole: 'R1',
       createdAt: new Date(),
       updatedAt: new Date()
