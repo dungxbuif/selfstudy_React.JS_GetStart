@@ -19,5 +19,5 @@ connectDB;
 const port = process.env.PORT || 8000;
 
 app.listen(port, () => {
-    console.log("Backend Nodejs is runing on the port : " + port)
+    console.log("Server running on http://dungxbuif-localhost:" + port)
 })
