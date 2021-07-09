@@ -2,7 +2,7 @@
   "name": "react-app-hoi-dan-it",
   "version": "0.1.0",
   "private": true,
-  "proxy": "localhost:1000",
+  "proxy": "http://dungxbuif-localhost:8000",
   "dependencies": {
     "@formatjs/intl-pluralrules": "^3.5.6",
     "@formatjs/intl-relativetimeformat": "^7.3.6",
