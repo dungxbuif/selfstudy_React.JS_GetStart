@@ -1,3 +1,4 @@
+const { response } = require('express');
 const userService = require('../services/userService');
 
 const handleLogin = async (req, res) => {
@@ -6,7 +7,7 @@ const handleLogin = async (req, res) => {
 
     if (!email || !password) {
         return res.status(500).json({
-            errCode: 1,
+            code: 1,
             message: 'Missing input parameter!',
         });
     }
@@ -15,6 +16,26 @@ const handleLogin = async (req, res) => {
 
     return res.status(200).json(userData);
 };
+
+const handleGetAllUsers = async (req, res) => {
+    let id = req.body.id;
+    let users = await userService.getAllUsers(id);
+
+    if (!id) {
+        return res.status(500).json({
+            code: 1,
+            message: 'Missing required parameters!!!',
+            data: [],
+        });
+    }
+
+    return res.status(200).json({
+        code: 0,
+        message: 'OK',
+        data: users,
+    });
+};
 module.exports = {
     handleLogin: handleLogin,
+    handleGetAllUsers: handleGetAllUsers,
 };
