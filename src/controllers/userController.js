@@ -1,4 +1,4 @@
-const userService = require("../services/userService");
+const userService = require('../services/userService');
 
 const handleLogin = async (req, res) => {
     let email = req.body.email;
@@ -7,7 +7,7 @@ const handleLogin = async (req, res) => {
     if (!email || !password) {
         return res.status(500).json({
             errCode: 1,
-            message: "Missing input parameter!",
+            message: 'Missing input parameter!',
         });
     }
 
