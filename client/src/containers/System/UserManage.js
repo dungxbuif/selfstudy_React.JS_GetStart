@@ -41,8 +41,8 @@ class UserManage extends Component {
             <div className="title">Mange user with Dũng Bùi </div>
             <div className="users-table mt-4 mx-5">
                <div className="container">
-                  <div className=" row mx-1 my-1 w-25">
-                     <button className="btn btn-primary px-3 w-50"   
+                  <div className=" px-1 my-1">
+                     <button className="btn btn-primary px-3"   
                         onClick={() => this.handleAddNewUser()}
                      >
                         <i className="fas fa-plus"></i> Add new user
@@ -61,8 +61,7 @@ class UserManage extends Component {
                         </tr>
                      </thead>
                      <tbody>
-                        {arrUsers &&
-                           arrUsers.map((item, index) => {
+                        {arrUsers && arrUsers.map((item, index) => {
                               return (
                                  <tr key={item.id}>
                                     <td>{item.id}</td>
