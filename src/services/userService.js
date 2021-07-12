@@ -34,6 +34,7 @@ const handleUserogin = async (email, password) => {
             }
 
             resolve(userData);
+            return;
          } else {
             userData.code = 1;
             userData.data = {};
@@ -41,6 +42,7 @@ const handleUserogin = async (email, password) => {
          }
 
          resolve(userData);
+         return;
       } catch (e) {
          reject(e);
       }
@@ -55,6 +57,7 @@ const checkUserEmail = (email) => {
          });
          if (user) resolve(user);
          else resolve(false);
+         return;
       } catch (e) {
          reject(e);
       }
@@ -87,15 +90,29 @@ const getAllUsers = (userId) => {
    });
 };
 
+let hashUserPassword = (password) => {
+   return new Promise(async (resolve, reject) => {
+      try {
+         let hashPassword = await bcrypt.hashSync(password, salt);
+         resolve(hashPassword);
+         return;
+      } catch (e) {
+         reject(e);
+      }
+   });
+};
+
 const createNewUser = (data) => {
    return new Promise(async (resolve, reject) => {
       try {
          let checkEmail = await checkUserEmail(data.email);
-         if (checkEmail)
+         if (checkEmail) {
             resolve({
                code: 1,
                message: 'Your email has already existed',
             });
+            return;
+         }
 
          let hashPasswordFromBcrypt = await hashUserPassword(data.password);
          await db.User.create({
@@ -112,6 +129,7 @@ const createNewUser = (data) => {
             code: 0,
             message: 'OK',
          });
+         return;
       } catch (e) {
          reject(e);
       }
@@ -125,16 +143,20 @@ const deleteUser = (id) => {
             where: { id },
             raw: false,
          });
-         if (!user)
+         if (!user) {
             resolve({
                code: 2,
                message: `The user isn't exist`,
             });
+            return;
+         }
+
          await user.destroy();
          resolve({
             code: 0,
             message: `Deleted successfully!!!`,
          });
+         return;
       } catch (e) {
          reject(e);
       }
@@ -149,6 +171,7 @@ const updateUser = (data) => {
                code: 2,
                message: 'Missing required parameters',
             });
+            return;
          }
          let user = await db.User.findOne({
             where: { id: data.id },
@@ -165,11 +188,13 @@ const updateUser = (data) => {
                code: 0,
                message: 'Updated successfully!!!',
             });
+            return;
          } else {
             resolve({
                code: 1,
                message: `User's not found`,
             });
+            return;
          }
       } catch (e) {
          reject(e);

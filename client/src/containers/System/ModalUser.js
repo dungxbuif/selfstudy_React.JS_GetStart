@@ -11,14 +11,35 @@ class ModalUser extends Component {
          lastName: '',
          address: '',
          phonenumber: '',
-         gender: '',
-         roleId: '',
+         gender: '1',
+         roleId: '1',
       };
    }
 
    componentDidMount() {}
 
    toggle = () => this.props.toggle();
+
+   checkValidateInput = () => {
+      let isValid = true;
+      let arrInput = [
+         'email',
+         'password',
+         'firstName',
+         'lastName',
+         'phonenumber',
+         'gender',
+         'roleId',
+      ];
+      for (let i = 0; i < arrInput.length; i++) {
+         if (!this.state[arrInput[i]]) {
+            isValid = false;
+            alert('Missing ' + arrInput[i]);
+            break;
+         }
+      }
+      return true;
+   };
 
    handleOnChange = (event, id) => {
       let tmpState = { ...this.state };
@@ -28,7 +49,13 @@ class ModalUser extends Component {
       });
    };
 
-   handleAddNewUser = () => {};
+   handleAddNewUser = () => {
+      let isValid = this.checkValidateInput();
+      if(isValid){
+         this.props.createNewUser(this.state);
+      }
+      return
+   };
 
    render() {
       return (
@@ -154,7 +181,7 @@ class ModalUser extends Component {
                      }}
                      className="modal-button"
                   >
-                     Add name
+                     Add user 
                   </Button>
                   <Button
                      color="secondary"
