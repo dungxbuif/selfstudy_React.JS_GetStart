@@ -62,11 +62,6 @@ const checkUserEmail = (email) => {
 };
 
 const getAllUsers = (userId) => {
-   return new Promise(async (req, res) => {
-      try {
-         let;
-      } catch (e) {}
-   });
    return new Promise(async (resolve, reject) => {
       try {
          let user = '';

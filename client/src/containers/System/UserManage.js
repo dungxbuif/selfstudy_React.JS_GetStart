@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import './UserManage.scss';
 import { getAllUsers } from '../../services/userService';
+import ModalUser from './ModalUser';
 class UserManage extends Component {
    constructor(props) {
       super(props);
       this.state = {
          arrUsers: [],
+         isOpenModal: false,
       };
    }
 
@@ -20,6 +21,19 @@ class UserManage extends Component {
       }
    }
 
+   handleAddNewUser = () => {
+      this.setState({
+         isOpenModal: true,
+      });
+      console.log('aaa');
+   };
+
+   toggleUserModal = () => {
+      this.setState({
+         isOpenModal: !this.state.isOpenModal,
+      });
+   };
+
    render() {
       let arrUsers = this.state.arrUsers;
       return (
@@ -27,6 +41,13 @@ class UserManage extends Component {
             <div className="title">Mange user with Dũng Bùi </div>
             <div className="users-table mt-4 mx-5">
                <div className="container">
+                  <div className=" row mx-1 my-1 w-25">
+                     <button className="btn btn-primary px-3 w-50"   
+                        onClick={() => this.handleAddNewUser()}
+                     >
+                        <i className="fas fa-plus"></i> Add new user
+                     </button>
+                  </div>
                   <table className="table table-hover">
                      <thead>
                         <tr>
@@ -50,23 +71,27 @@ class UserManage extends Component {
                                     <td>{item.lastName}</td>
                                     <td>{item.address}</td>
                                     <td>{item.roleId}</td>
-                                    <td className="action-column">
-                                       <a href={`/edit-crud?id=${item.id}`}>
+                                    <td className="action-column d-flex">
+                                       <div className="w-50 px-1">
+                                           <a href={`/edit-crud?id=${item.id}`}>
                                           <button
                                              type="button"
-                                             className="btn btn-warning"
+                                             className="btn btn-warning w-100"
                                           >
                                              <i className="fas fa-pencil-alt"></i>
                                           </button>
                                        </a>
+                                       </div>
+                                       <div className="w-50 px-1">
                                        <a href={`/delete-crud?id=${item.id}`}>
                                           <button
                                              type="button"
-                                             className="btn btn-danger"
+                                             className="btn btn-danger w-100"
                                           >
                                              <i className="fas fa-trash"></i>
                                           </button>
                                        </a>
+                                       </div>
                                     </td>
                                  </tr>
                               );
@@ -75,6 +100,10 @@ class UserManage extends Component {
                   </table>
                </div>
             </div>
+            <ModalUser
+               isOpen={this.state.isOpenModal}
+               toggle={this.toggleUserModal}
+            />
          </div>
       );
    }

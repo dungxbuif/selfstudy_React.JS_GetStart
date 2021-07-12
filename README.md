@@ -37,4 +37,4 @@ npx sequelize-cli db:migrate
 ## Lệnh seed dữ liệu
 
 ## Thiết kế bảng CSDL
-https://docs.google.com/spreadsheets/d/175ts9y-bJGAwEUtVEFojJQ4nFCH_lIU0poA0wVjM_lk/edit#gid=0
+https://docs.google.com/spreadsheets/d/1npm75ts9y-bJGAwEUtVEFojJQ4nFCH_lIU0poA0wVjM_lk/edit#gid=0
