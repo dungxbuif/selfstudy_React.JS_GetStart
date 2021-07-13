@@ -1,22 +1,29 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { connect } from 'react-redux';
+import { emitter } from '../../utils/emitter';
 class ModalUser extends Component {
+   initState = {
+      email: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      address: '',
+      phonenumber: '',
+      gender: '1',
+      roleId: '1',
+   };
    constructor(props) {
       super(props);
       this.state = {
-         email: '',
-         password: '',
-         firstName: '',
-         lastName: '',
-         address: '',
-         phonenumber: '',
-         gender: '1',
-         roleId: '1',
+         ...this.initState,
       };
+      this.listenEmitter();
    }
 
-   componentDidMount() {}
+   componentDidMount() {
+      console.log('mounting');
+   }
 
    toggle = () => this.props.toggle();
 
@@ -51,10 +58,16 @@ class ModalUser extends Component {
 
    handleAddNewUser = () => {
       let isValid = this.checkValidateInput();
-      if(isValid){
+      if (isValid) {
          this.props.createNewUser(this.state);
       }
-      return
+      return;
+   };
+
+   listenEmitter = () => {
+      emitter.on('EVENT_CLEAR_MODAL_DATA', () => {
+         this.setState({ ...this.initState });
+      });
    };
 
    render() {
@@ -181,7 +194,7 @@ class ModalUser extends Component {
                      }}
                      className="modal-button"
                   >
-                     Add user 
+                     Add user
                   </Button>
                   <Button
                      color="secondary"

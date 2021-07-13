@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './UserManage.scss';
-import { getAllUsers, createNewUserService } from '../../services/userService';
+import {
+   getAllUsers,
+   createNewUserService,
+   deleteUserService,
+} from '../../services/userService';
 import ModalUser from './ModalUser';
+import { emitter } from '../../utils/emitter';
 class UserManage extends Component {
    constructor(props) {
       super(props);
@@ -46,14 +51,27 @@ class UserManage extends Component {
       try {
          let res = await createNewUserService(data);
          if (res && res.code !== 0) {
-            alert(res.message)
+            alert(res.message);
          } else {
             await this.getAllUsersFromReact();
             this.setState({
                isOpenModal: false,
             });
+            emitter.emit('EVENT_CLEAR_MODAL_DATA', { data });
          }
-         console.log(res && res.code !== 0);
+      } catch (e) {
+         console.log(e);
+      }
+   };
+
+   handleDeleteUser = async (id) => {
+      try {
+         let res = await deleteUserService(id);
+         if (res && res.code === 0) {
+            await this.getAllUsersFromReact();
+         } else {
+            alert(res.message);
+         }
       } catch (e) {
          console.log(e);
       }
@@ -99,26 +117,23 @@ class UserManage extends Component {
                                     <td>{item.roleId}</td>
                                     <td className="action-column d-flex">
                                        <div className="w-50 px-1">
-                                          <a href={`/edit-crud?id=${item.id}`}>
-                                             <button
-                                                type="button"
-                                                className="btn btn-warning w-100"
-                                             >
-                                                <i className="fas fa-pencil-alt"></i>
-                                             </button>
-                                          </a>
+                                          <button
+                                             type="button"
+                                             className="btn btn-warning w-100"
+                                          >
+                                             <i className="fas fa-pencil-alt"></i>
+                                          </button>
                                        </div>
                                        <div className="w-50 px-1">
-                                          <a
-                                             href={`/delete-crud?id=${item.id}`}
+                                          <button
+                                             type="button"
+                                             className="btn btn-danger w-100"
+                                             onClick={() => {
+                                                this.handleDeleteUser(item.id);
+                                             }}
                                           >
-                                             <button
-                                                type="button"
-                                                className="btn btn-danger w-100"
-                                             >
-                                                <i className="fas fa-trash"></i>
-                                             </button>
-                                          </a>
+                                             <i className="fas fa-trash"></i>
+                                          </button>
                                        </div>
                                     </td>
                                  </tr>
