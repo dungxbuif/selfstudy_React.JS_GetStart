@@ -21,8 +21,13 @@ class ModalUser extends Component {
       this.listenEmitter();
    }
 
-   componentDidMount() {
-      console.log('mounting');
+   componentDidMount() {}
+   componentDidUpdate(prevProps) {
+      if (this.props.addOrUp === 'update') {
+         if (this.props.currentData !== prevProps.currentData) {
+            this.setState({ ...this.props.currentData });
+         }
+      }
    }
 
    toggle = () => this.props.toggle();
@@ -40,6 +45,8 @@ class ModalUser extends Component {
       ];
       for (let i = 0; i < arrInput.length; i++) {
          if (!this.state[arrInput[i]]) {
+            if (this.props.addOrUp === 'update' && arrInput[i] === 'password')
+               continue;
             isValid = false;
             alert('Missing ' + arrInput[i]);
             break;
@@ -70,6 +77,22 @@ class ModalUser extends Component {
       });
    };
 
+   handleUpdateUser = () => {
+      let isValid = this.checkValidateInput();
+      if (isValid) {
+         this.props.updateUser(this.state);
+      }
+      return;
+   };
+
+   handleUser = () => {
+      if (this.props.addOrUp === 'add') {
+         this.handleAddNewUser();
+      } else {
+         this.handleUpdateUser();
+      }
+   };
+
    render() {
       return (
          <div>
@@ -86,7 +109,9 @@ class ModalUser extends Component {
                      this.toggle();
                   }}
                >
-                  Create an user
+                  {this.props.addOrUp === 'add'
+                     ? 'Create an user'
+                     : 'Update user'}
                </ModalHeader>
                <ModalBody>
                   <div className="formContainer">
@@ -98,18 +123,24 @@ class ModalUser extends Component {
                               this.handleOnChange(event, 'email')
                            }
                            value={this.state.email}
-                        />
-                     </div>
-                     <div className="input-container">
-                        <label>Password</label>
-                        <input
-                           type="password"
-                           onChange={(event) =>
-                              this.handleOnChange(event, 'password')
+                           disabled={
+                              this.props.addOrUp === 'add' ? null : 'disabled'
                            }
-                           value={this.state.password}
                         />
                      </div>
+                     {this.props.addOrUp === 'add' ? (
+                        <div className="input-container">
+                           <label>Password</label>
+                           <input
+                              type="password"
+                              onChange={(event) =>
+                                 this.handleOnChange(event, 'password')
+                              }
+                              value={this.state.password}
+                           />
+                        </div>
+                     ) : null}
+
                      <div className="input-container">
                         <label>Firstname</label>
                         <input
@@ -159,11 +190,9 @@ class ModalUser extends Component {
                            onChange={(event) =>
                               this.handleOnChange(event, 'gender')
                            }
-                           value={this.state.gender}
+                           value={this.state.gender.toString()}
                         >
-                           <option defaultValue value="1">
-                              Male
-                           </option>
+                           <option value="1">Male</option>
                            <option value="0">Female</option>
                         </select>
                      </div>
@@ -175,11 +204,9 @@ class ModalUser extends Component {
                            onChange={(event) =>
                               this.handleOnChange(event, 'roleId')
                            }
-                           value={this.state.roleId}
+                           value={this.state.roleId.toString()}
                         >
-                           <option defaultValue value="1">
-                              Admin
-                           </option>
+                           <option value="1">Admin</option>
                            <option value="2">Doctor</option>
                            <option value="3">Patient</option>
                         </select>
@@ -190,11 +217,11 @@ class ModalUser extends Component {
                   <Button
                      color="primary"
                      onClick={() => {
-                        this.handleAddNewUser();
+                        this.handleUser();
                      }}
                      className="modal-button"
                   >
-                     Add user
+                     {this.props.addOrUp === 'add' ? 'Add user' : 'Update user'}
                   </Button>
                   <Button
                      color="secondary"

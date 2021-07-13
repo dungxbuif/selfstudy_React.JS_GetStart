@@ -5,6 +5,7 @@ import {
    getAllUsers,
    createNewUserService,
    deleteUserService,
+   updateUserService,
 } from '../../services/userService';
 import ModalUser from './ModalUser';
 import { emitter } from '../../utils/emitter';
@@ -14,6 +15,8 @@ class UserManage extends Component {
       this.state = {
          arrUsers: [],
          isOpenModal: false,
+         addOrUp: 'add',
+         currentData: {},
       };
    }
 
@@ -36,8 +39,18 @@ class UserManage extends Component {
    };
 
    handleAddNewUser = () => {
+      emitter.emit('EVENT_CLEAR_MODAL_DATA');
       this.setState({
          isOpenModal: true,
+         addOrUp: 'add',
+      });
+   };
+
+   handleUpdateUser = (data) => {
+      this.setState({
+         isOpenModal: true,
+         addOrUp: 'update',
+         currentData: data,
       });
    };
 
@@ -50,6 +63,24 @@ class UserManage extends Component {
    createNewUser = async (data) => {
       try {
          let res = await createNewUserService(data);
+         if (res && res.code !== 0) {
+            alert(res.message);
+         } else {
+            await this.getAllUsersFromReact();
+            this.setState({
+               isOpenModal: false,
+            });
+            emitter.emit('EVENT_CLEAR_MODAL_DATA', { data });
+         }
+      } catch (e) {
+         console.log(e);
+      }
+   };
+
+   updateUser = async (data) => {
+      try {
+         let res = await updateUserService(data);
+         console.log(res);
          if (res && res.code !== 0) {
             alert(res.message);
          } else {
@@ -77,6 +108,14 @@ class UserManage extends Component {
       }
    };
 
+   handleModalUser = (type, data) => {
+      if (type === 'add') {
+         this.handleAddNewUser();
+      } else {
+         this.handleUpdateUser(data);
+      }
+   };
+
    render() {
       let arrUsers = this.state.arrUsers;
       return (
@@ -87,7 +126,7 @@ class UserManage extends Component {
                   <div className=" px-1 my-1">
                      <button
                         className="btn btn-primary px-3"
-                        onClick={() => this.handleAddNewUser()}
+                        onClick={() => this.handleModalUser('add')}
                      >
                         <i className="fas fa-plus"></i> Add new user
                      </button>
@@ -120,6 +159,12 @@ class UserManage extends Component {
                                           <button
                                              type="button"
                                              className="btn btn-warning w-100"
+                                             onClick={() => {
+                                                this.handleModalUser(
+                                                   'update',
+                                                   item
+                                                );
+                                             }}
                                           >
                                              <i className="fas fa-pencil-alt"></i>
                                           </button>
@@ -147,6 +192,9 @@ class UserManage extends Component {
                isOpen={this.state.isOpenModal}
                toggle={this.toggleUserModal}
                createNewUser={this.createNewUser}
+               updateUser={this.updateUser}
+               addOrUp={this.state.addOrUp}
+               currentData={this.state.currentData}
             />
          </div>
       );
