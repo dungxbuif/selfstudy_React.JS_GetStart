@@ -102,13 +102,11 @@ class ModalUser extends Component {
                   this.toggle();
                }}
                size="lg"
-               className={'modal-user-container'}
-            >
+               className={'modal-user-container'}>
                <ModalHeader
                   toggle={() => {
                      this.toggle();
-                  }}
-               >
+                  }}>
                   {this.props.addOrUp === 'add'
                      ? 'Create an user'
                      : 'Update user'}
@@ -190,8 +188,7 @@ class ModalUser extends Component {
                            onChange={(event) =>
                               this.handleOnChange(event, 'gender')
                            }
-                           value={this.state.gender.toString()}
-                        >
+                           value={this.state.gender.toString()}>
                            <option value="1">Male</option>
                            <option value="0">Female</option>
                         </select>
@@ -204,8 +201,7 @@ class ModalUser extends Component {
                            onChange={(event) =>
                               this.handleOnChange(event, 'roleId')
                            }
-                           value={this.state.roleId.toString()}
-                        >
+                           value={this.state.roleId.toString()}>
                            <option value="1">Admin</option>
                            <option value="2">Doctor</option>
                            <option value="3">Patient</option>
@@ -219,8 +215,7 @@ class ModalUser extends Component {
                      onClick={() => {
                         this.handleUser();
                      }}
-                     className="modal-button"
-                  >
+                     className="modal-button">
                      {this.props.addOrUp === 'add' ? 'Add user' : 'Update user'}
                   </Button>
                   <Button
@@ -228,8 +223,7 @@ class ModalUser extends Component {
                      onClick={() => {
                         this.toggle();
                      }}
-                     className="modal-button"
-                  >
+                     className="modal-button">
                      Cancel
                   </Button>
                </ModalFooter>
