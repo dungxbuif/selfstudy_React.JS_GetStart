@@ -1,0 +1,65 @@
+.home-header-container {
+   border: 1px solid red;
+   width: 100%;
+   padding-top: 10px;
+   padding-bottom: 10px;
+   justify-content: space-between;
+
+   .home-header-content {
+      display: flex;
+      width: 1170px;
+      padding-left: 15px;
+      padding-right: 15px;
+
+      .left-content {
+         display: flex;
+         width: fit-content;
+         i {
+            font-size: 1.7em;
+            color: #969495;
+            width: fit-content;
+            padding: 0;
+            margin: 10px 8px 10px 0;
+         }
+         .header-logo {
+            background: url('https://bookingcare.vn/assets/icon/bookingcare-2020.svg')
+               center center no-repeat;
+            width: 160px;
+            height: 35px;
+            margin-top: 5px;
+         }
+      }
+
+      .center-content {
+         padding-top: 10px;
+         padding-bottom: 10px;
+         display: flex;
+         width: fit-content;
+         .child-content {
+            margin-left: 25px;
+            .child-title {
+               font-size: 12px;
+            }
+            .child-descript {
+               font-size: 10px;
+               font-weight: lighter;
+               color: #bfbfbf;
+            }
+         }
+      }
+
+      .right-content {
+         width: 25%;
+         display: flex;
+         justify-content: flex-end;
+         align-items: center;
+         i {
+            color: #45c3d2;
+         }
+         span {
+            font-size: 1.3em;
+            color: #969495;
+         }
+      }
+   }
+}
