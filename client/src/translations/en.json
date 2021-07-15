@@ -1,4 +1,14 @@
 {
+    "home-header": {
+        "speciality": "Medical specialty",
+        "search-doctor":"Find a doctor by a specialty",
+        "health-facility": "health facilities",
+        "choose-hospital": "Choose the hospital",
+        "medical-combo": "Medical examination combo",
+        "health-check": "General health check",
+        "doctor": "Doctor",
+        "choose-doc": "Choose good doctors"
+    },
     "common": {
         "add": "Add",
         "edit": "Edit",
