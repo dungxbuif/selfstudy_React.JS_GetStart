@@ -53,19 +53,29 @@
          display: flex;
          justify-content: flex-end;
          align-items: center;
+
          i {
             color: #45c3d2;
-            width: fit-content;
+            width: 14px;
+            height: 14px;
             padding: 0;
          }
          span {
             font-size: 1.3em;
             color: #969495;
             width: fit-content;
-            padding: 0;
          }
-         div {
-            width: fit-content;
+
+         .lang {
+            cursor: pointer;
+            opacity: 0.2;
+            &.active {
+               color: #45c3d2;
+               opacity: 1;
+            }
+         }
+         .lang:hover {
+            opacity: 1;
          }
       }
    }

@@ -3,9 +3,15 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './HomeHeader.scss';
 import { FormattedMessage } from 'react-intl';
-
+import { LANGUAGES } from '../../utils/constant';
+import { changeLangugeApp } from '../../store/actions/appActions';
 class HomeHeader extends Component {
+   changLanguge = (lang) => {
+      this.props.changeLangugeAppRedux(lang);
+   };
+
    render() {
+      let language = this.props.language;
       return (
          <>
             <div className="home-header-container">
@@ -62,11 +68,27 @@ class HomeHeader extends Component {
                      </div>
                   </div>
                   <div className="right-content">
-                     <div className="row">
+                     <div className="row align-items-center">
                         <i className="fas fa-question-circle"></i>
                         <span>Hỗ trợ</span>
-                        <div className="lang-vi">VN</div>
-                        <div className="lang-en">EN</div>
+                        <span
+                           className={
+                              language === LANGUAGES.VI
+                                 ? 'langguage-vi active lang'
+                                 : 'langguage-vi lang'
+                           }
+                           onClick={() => this.changLanguge(LANGUAGES.VI)}>
+                           VN
+                        </span>
+                        <span
+                           className={
+                              language === LANGUAGES.EN
+                                 ? 'langguage-en active lang'
+                                 : 'langguage-en lang'
+                           }
+                           onClick={() => this.changLanguge(LANGUAGES.EN)}>
+                           EN
+                        </span>
                      </div>
                   </div>
                </div>
@@ -141,11 +163,12 @@ class HomeHeader extends Component {
 const mapStateToProps = (state) => {
    return {
       isLoggedIn: state.user.isLoggedIn,
+      language: state.app.language,
    };
 };
 
 const mapDispatchToProps = (dispatch) => {
-   return {};
+   return { changeLangugeAppRedux: (lang) => dispatch(changeLangugeApp(lang)) };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeHeader);
