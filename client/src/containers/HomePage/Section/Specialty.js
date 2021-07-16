@@ -8,33 +8,43 @@ import '../../../../node_modules/slick-carousel/slick/slick-theme.css';
 class Specialty extends Component {
    render() {
       let settings = {
-         dots: true,
+         dots: false,
          infinite: true,
          speed: 500,
-         slidesToShow: 1,
-         slidesToScroll: 1,
+         slidesToShow: 4,
+         slidesToScroll: 2,
       };
       return (
          <div className="section-specialty">
-            <div className="specialty-content">
-               <Slider {...settings} className="section-specialty">
-                  <div>
-                     <h3>1</h3>
+            <div className="specialty-container row">
+               <div className="specialty-header py-4 d-flex justify-content-between">
+                  <h2>Chuyên khoa phổ biến</h2>
+                  <button>Xem thêm</button>
+               </div>
+               <Slider {...settings} className="specialty-slider">
+                  <div className="specialty-body text-left ">
+                     <img src="https://cdn.bookingcare.vn/fr/w300/2019/12/13/120331-co-xuong-khop.jpg" />
+                     <div>Cơ xương khớp</div>
                   </div>
-                  <div>
-                     <h3>2</h3>
+                  <div className="specialty-body text-left">
+                     <img src="https://cdn.bookingcare.vn/fr/w300/2019/12/13/120331-co-xuong-khop.jpg" />
+                     <div>Cơ xương khớp</div>
                   </div>
-                  <div>
-                     <h3>3</h3>
+                  <div className="specialty-body text-left ">
+                     <img src="https://cdn.bookingcare.vn/fr/w300/2019/12/13/120331-co-xuong-khop.jpg" />
+                     <div>Cơ xương khớp</div>
                   </div>
-                  <div>
-                     <h3>4</h3>
+                  <div className="specialty-body text-left ">
+                     <img src="https://cdn.bookingcare.vn/fr/w300/2019/12/13/120331-co-xuong-khop.jpg" />
+                     <div>Cơ xương khớp</div>
                   </div>
-                  <div>
-                     <h3>5</h3>
+                  <div className="specialty-body text-left ">
+                     <img src="https://cdn.bookingcare.vn/fr/w300/2019/12/13/120331-co-xuong-khop.jpg" />
+                     <div>Cơ xương khớp</div>
                   </div>
-                  <div>
-                     <h3>6</h3>
+                  <div className="specialty-body text-left ">
+                     <img src="https://cdn.bookingcare.vn/fr/w300/2019/12/13/120331-co-xuong-khop.jpg" />
+                     <div>Cơ xương khớp</div>
                   </div>
                </Slider>
             </div>
