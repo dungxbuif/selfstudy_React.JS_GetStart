@@ -11,7 +11,7 @@ class ModalUser extends Component {
       address: '',
       phonenumber: '',
       gender: '1',
-      roleId: '1',
+      roleId: 'R1',
    };
    constructor(props) {
       super(props);
@@ -202,9 +202,9 @@ class ModalUser extends Component {
                               this.handleOnChange(event, 'roleId')
                            }
                            value={this.state.roleId.toString()}>
-                           <option value="1">Admin</option>
-                           <option value="2">Doctor</option>
-                           <option value="3">Patient</option>
+                           <option value="R1">Admin</option>
+                           <option value="R2">Doctor</option>
+                           <option value="R3">Patient</option>
                         </select>
                      </div>
                   </div>
