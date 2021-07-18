@@ -22,7 +22,6 @@ class Header extends Component {
                <Navigator menus={adminMenu} />
             </div>
             {/* nút logout */}
-            this.{' '}
             <div className="languages">
                <span
                   className={
