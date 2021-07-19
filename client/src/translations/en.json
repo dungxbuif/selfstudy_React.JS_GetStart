@@ -7,7 +7,8 @@
         "medical-combo": "Medical examination combo",
         "health-check": "General health check",
         "doctor": "Doctor",
-        "choose-doc": "Choose good doctors"
+        "choose-doc": "Choose good doctors",
+        "welcome": "Welcome, "
     },
     "common": {
         "add": "Add",

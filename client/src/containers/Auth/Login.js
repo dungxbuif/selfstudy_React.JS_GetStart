@@ -20,7 +20,6 @@ class Login extends Component {
    }
 
    handleOnChangeInput = (event) => {
-      console.log(event);
       this.setState({
          username: event.target.value,
       });

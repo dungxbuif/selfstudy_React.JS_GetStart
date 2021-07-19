@@ -19,10 +19,12 @@ const handleUserogin = async (email, password) => {
             if (isUser) {
                let userPassword = isUser.password;
                let roleId = isUser.roleId;
+               let firstName = isUser.firstName;
                const check = bcrypt.compareSync(password, userPassword);
                if (check) {
                   userData.message = `OK`;
                   userData.data.roleId = roleId;
+                  userData.data.username = firstName;
                } else {
                   userData.code = 3;
                   userData.message = `Wrong password`;

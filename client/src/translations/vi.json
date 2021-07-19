@@ -7,7 +7,8 @@
         "medical-combo": "Gói khám bệnh",
         "health-check": "Khám sức khỏe tổng quát",
         "doctor": "Bác sỹ",
-        "choose-doc": "Chọn bác sỹ giỏi"
+        "choose-doc": "Chọn bác sỹ giỏi",
+        "welcome": "Xin chào, "
     },     
     "common": {
         "add": "Thêm",
