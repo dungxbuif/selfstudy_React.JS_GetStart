@@ -36,5 +36,18 @@
             "manage-handbook": "Quản lý cẩm nang",
             "handbook": "Cẩm nang"
         }
-    }
+    },
+    "manage-user":{
+        "add": "Thêm mới người dùng",
+        "pass": "Mật khẩu",
+        "name": "Tên",
+        "lastname": "Họ",
+        "number": "Số điện thoại",
+        "address": "Địa chỉ",
+        "gender": "Giới tính",
+        "role": "Vai trò",
+        "position": "Vị trí",
+        "save": "Lưu",
+        "image": "Ảnh"
+    }   
 }

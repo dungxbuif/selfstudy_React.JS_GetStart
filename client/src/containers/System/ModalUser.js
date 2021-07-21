@@ -180,7 +180,7 @@ class ModalUser extends Component {
                         />
                      </div>
                      <div className="input-container w-25">
-                        <label>Sex</label>
+                        <label>Gender</label>
 
                         <select
                            name="gender"
