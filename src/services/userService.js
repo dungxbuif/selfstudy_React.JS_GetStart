@@ -122,10 +122,12 @@ const createNewUser = (data) => {
             password: hashPasswordFromBcrypt,
             firstName: data.firstName,
             lastName: data.lastName,
+            image: data.image,
             address: data.address,
             phonenumber: data.phonenumber,
-            gender: data.gender === '1' ? true : false,
+            gender: data.gender,
             roleId: data.roleId,
+            positionId: data.positionId,
          });
          resolve({
             code: 0,

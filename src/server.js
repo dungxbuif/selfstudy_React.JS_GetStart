@@ -40,8 +40,7 @@ viewEngine(app);
 route(app);
 
 connectDB;
-const model = require('./models');
-console.log(model);
+
 const port = process.env.PORT || 8000;
 
 app.listen(port, () => {

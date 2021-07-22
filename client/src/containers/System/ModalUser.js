@@ -52,7 +52,7 @@ class ModalUser extends Component {
             break;
          }
       }
-      return true;
+      return isValid;
    };
 
    handleOnChange = (event, id) => {
