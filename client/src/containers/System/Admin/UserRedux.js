@@ -5,6 +5,7 @@ import './UserRedux.scss';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 import * as actions from '../../../store/actions';
+import TableManageUser from './TableManageUser';
 class UserRedux extends Component {
    initState = {
       email: '',
@@ -56,15 +57,12 @@ class UserRedux extends Component {
       let objURL = URL.createObjectURL(file);
       let tmpForm = { ...this.state.form };
       tmpForm.image = file;
-      this.setState(
-         {
-            previewImgURL: objURL,
-            form: {
-               ...tmpForm,
-            },
+      this.setState({
+         previewImgURL: objURL,
+         form: {
+            ...tmpForm,
          },
-         () => console.log(this.state.form)
-      );
+      });
    };
    previewClick = (evevt) => {
       if (this.state.previewImgURL !== '') {
@@ -83,17 +81,25 @@ class UserRedux extends Component {
       });
    };
 
-   handleSaveUse = () => {
+   handleSaveUse = async () => {
       let isValid = this.checkValidateInput();
       if (!isValid) return;
       let tmpForm = { ...this.state.form };
       tmpForm.image = JSON.stringify(tmpForm.image);
-      this.props.createNewUser({
+      await this.props.createNewUser({
          ...tmpForm,
       });
+
+      this.props.fetchUserRedux();
    };
 
-   componentDidMount() {}
+   componentDidUpdate(prevProps, prevStates) {
+      if (prevProps.listUsers !== this.props.listUsers) {
+         this.setState({
+            form: { ...this.initState },
+         });
+      }
+   }
 
    render() {
       return (
@@ -273,6 +279,10 @@ class UserRedux extends Component {
                   </div>
                </div>
             </div>
+
+            <div className="row my-5 mx-5">
+               <TableManageUser />
+            </div>
             {this.state.isOpen && (
                <Lightbox
                   mainSrc={this.state.previewImgURL}
@@ -285,11 +295,14 @@ class UserRedux extends Component {
 }
 
 const mapStateToProps = (state) => {
-   return {};
+   return { listUsers: state.admin.users };
 };
 
 const mapDispatchToProps = (dispatch) => {
-   return { createNewUser: (data) => dispatch(actions.createNewUser(data)) };
+   return {
+      createNewUser: (data) => dispatch(actions.createNewUser(data)),
+      fetchUserRedux: () => dispatch(actions.fetchALllUsersStart()),
+   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserRedux);

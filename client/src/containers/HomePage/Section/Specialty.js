@@ -21,7 +21,7 @@ class Specialty extends Component {
                   <h2>Chuyên khoa phổ biến</h2>
                   <button>Xem thêm</button>
                </div>
-               <Slider {...settings} className="specialty-slider">
+               <Slider {...settings} className="specialty-slider container">
                   <div className="specialty-body text-left ">
                      <img src="https://cdn.bookingcare.vn/fr/w300/2019/12/13/120331-co-xuong-khop.jpg" />
                      <div>Cơ xương khớp</div>
