@@ -75,7 +75,6 @@ class UserRedux extends Component {
    handleOnChange = (event, id) => {
       let tmpState = { ...this.state.form };
       tmpState[id] = event.target.value;
-      let tmpr;
       this.setState({
          form: { ...tmpState },
       });
