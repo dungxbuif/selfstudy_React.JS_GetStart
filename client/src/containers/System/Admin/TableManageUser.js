@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {FormattedMessage} from 'react-intl';
+import {connect} from 'react-redux';
 import 'react-image-lightbox/style.css';
 import * as actions from '../../../store/actions';
 class TableManageUser extends Component {
@@ -23,7 +23,7 @@ class TableManageUser extends Component {
       }
    }
 
-   handleDeleteUser = async (id) => {
+   handleDeleteUser = async id => {
       await this.props.deleteUser(id);
       this.props.fetchUserRedux();
    };
@@ -65,13 +65,7 @@ class TableManageUser extends Component {
                                  <button
                                     type="button"
                                     className="btn btn-warning w-100"
-                                    // onClick={() => {
-                                    //    this.handleModalUser(
-                                    //       'update',
-                                    //       item
-                                    //    );
-                                    // }}
-                                 >
+                                    onClick={() => this.props.onEdit(item)}>
                                     <i className="fas fa-pencil-alt"></i>
                                  </button>
                               </div>
@@ -95,14 +89,14 @@ class TableManageUser extends Component {
    }
 }
 
-const mapStateToProps = (state) => {
-   return { listUsers: state.admin.users };
+const mapStateToProps = state => {
+   return {listUsers: state.admin.users};
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
    return {
       fetchUserRedux: () => dispatch(actions.fetchALllUsersStart()),
-      deleteUser: (id) => dispatch(actions.deleteUser(id)),
+      deleteUser: id => dispatch(actions.deleteUser(id)),
    };
 };
 

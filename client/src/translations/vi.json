@@ -48,6 +48,8 @@
         "role": "Vai trò",
         "position": "Vị trí",
         "save": "Lưu",
-        "image": "Ảnh"
+        "image": "Ảnh",
+        "cancelEdit": "Hủy chỉnh sửa",
+        "saveEdit": "Lưu chỉnh sửa"
     }   
 }

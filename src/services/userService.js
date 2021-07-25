@@ -55,7 +55,7 @@ const checkUserEmail = (email) => {
    return new Promise(async (resolve, reject) => {
       try {
          let user = await db.User.findOne({
-            where: { email },
+            where: {email},
          });
          if (user) resolve(user);
          else resolve(false);
@@ -79,7 +79,7 @@ const getAllUsers = (userId) => {
          }
          if (userId && userId !== 'ALL') {
             user = await db.User.findOne({
-               where: { id: userId },
+               where: {id: userId},
                attributes: {
                   exclude: ['password'],
                },
@@ -144,7 +144,7 @@ const deleteUser = (id) => {
    return new Promise(async (resolve, reject) => {
       try {
          let user = await db.User.findOne({
-            where: { id },
+            where: {id},
             raw: false,
          });
          if (!user) {
@@ -178,16 +178,20 @@ const updateUser = (data) => {
             return;
          }
          let user = await db.User.findOne({
-            where: { id: data.id },
+            where: {id: data.id},
             raw: false,
          });
 
          if (user) {
             user.firstName = data.firstName;
             user.lastName = data.lastName;
+            user.image = data.image;
             user.address = data.address;
+            user.phonenumber = data.phonenumber;
             user.gender = data.gender;
             user.roleId = data.roleId;
+            user.positionId = data.positionId;
+
             await user.save();
             let allUsers = db.User.findAll();
             resolve({

@@ -48,6 +48,8 @@
         "role": "Role",
         "position": "Position",
         "save": "Save",
-        "image": "Image"
+        "image": "Image",
+        "cancelEdit": "Cancel edit",
+        "saveEdit": "Save edit"
     }   
 }

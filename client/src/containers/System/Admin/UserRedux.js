@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {FormattedMessage} from 'react-intl';
+import {connect} from 'react-redux';
 import './UserRedux.scss';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 import * as actions from '../../../store/actions';
 import TableManageUser from './TableManageUser';
+import {CRUD_ACTIONS} from '../../../utils';
 class UserRedux extends Component {
    initState = {
       email: '',
@@ -25,6 +26,8 @@ class UserRedux extends Component {
       this.state = {
          previewImgURL: '',
          isOpen: false,
+         isEdit: false,
+         id: '',
          form: {
             ...this.initState,
          },
@@ -55,7 +58,7 @@ class UserRedux extends Component {
       let data = event.target.files;
       let file = data[0];
       let objURL = URL.createObjectURL(file);
-      let tmpForm = { ...this.state.form };
+      let tmpForm = {...this.state.form};
       tmpForm.image = file;
       this.setState({
          previewImgURL: objURL,
@@ -64,7 +67,7 @@ class UserRedux extends Component {
          },
       });
    };
-   previewClick = (evevt) => {
+   previewClick = (event) => {
       if (this.state.previewImgURL !== '') {
          this.setState({
             isOpen: true,
@@ -73,32 +76,52 @@ class UserRedux extends Component {
    };
 
    handleOnChange = (event, id) => {
-      let tmpState = { ...this.state.form };
+      let tmpState = {...this.state.form};
       tmpState[id] = event.target.value;
       this.setState({
-         form: { ...tmpState },
+         form: {...tmpState},
       });
    };
 
-   handleSaveUse = async () => {
-      let isValid = this.checkValidateInput();
-      if (!isValid) return;
-      let tmpForm = { ...this.state.form };
+   handleSaveUser = async () => {
+      let tmpForm = {...this.state.form};
       tmpForm.image = JSON.stringify(tmpForm.image);
-      await this.props.createNewUser({
-         ...tmpForm,
-      });
 
-      this.props.fetchUserRedux();
+      if (this.state.isEdit) {
+         tmpForm.id = this.state.id;
+         this.props.editUserRedux({...tmpForm});
+      } else {
+         let isValid = this.checkValidateInput();
+         if (!isValid) return;
+         await this.props.createNewUser({...tmpForm});
+         this.props.fetchUserRedux();
+      }
    };
 
    componentDidUpdate(prevProps, prevStates) {
       if (prevProps.listUsers !== this.props.listUsers) {
          this.setState({
-            form: { ...this.initState },
+            form: {...this.initState},
          });
       }
    }
+
+   onEdit = (item) => {
+      let tmpItem = {...item};
+      tmpItem.password = '';
+      this.setState({
+         form: {...tmpItem},
+         isEdit: true,
+         id: item.id,
+      });
+   };
+
+   handleCancelEdit = () => {
+      this.setState({
+         form: {...this.initState},
+         isEdit: false,
+      });
+   };
 
    render() {
       return (
@@ -122,6 +145,7 @@ class UserRedux extends Component {
                               this.handleOnChange(event, 'email')
                            }
                            value={this.state.form.email}
+                           disabled={this.state.isEdit ? true : false}
                         />
                      </div>
                      <div className="col-3">
@@ -135,6 +159,7 @@ class UserRedux extends Component {
                               this.handleOnChange(event, 'password')
                            }
                            value={this.state.form.password}
+                           disabled={this.state.isEdit ? true : false}
                         />
                      </div>
                      <div className="col-3">
@@ -268,24 +293,39 @@ class UserRedux extends Component {
                               onClick={this.previewClick}></div>
                         </div>
                      </div>
-                     <div className="col-12">
-                        <button
-                           className="btn btn-primary mt-3"
-                           onClick={this.handleSaveUse}>
-                           <FormattedMessage id="manage-user.save" />
-                        </button>
+                     <div className="col-12 pt-3">
+                        {this.state.isEdit ? (
+                           <>
+                              <button
+                                 className="btn btn-warning"
+                                 onClick={this.handleSaveUser}>
+                                 <FormattedMessage id="manage-user.saveEdit" />
+                              </button>
+                              <button
+                                 className="btn btn-danger ml-2"
+                                 onClick={this.handleCancelEdit}>
+                                 <FormattedMessage id="manage-user.cancelEdit" />
+                              </button>
+                           </>
+                        ) : (
+                           <button
+                              className="btn btn-primary "
+                              onClick={this.handleSaveUser}>
+                              <FormattedMessage id="manage-user.save" />
+                           </button>
+                        )}
                      </div>
                   </div>
                </div>
             </div>
 
             <div className="row my-5 mx-5">
-               <TableManageUser />
+               <TableManageUser onEdit={this.onEdit} />
             </div>
             {this.state.isOpen && (
                <Lightbox
                   mainSrc={this.state.previewImgURL}
-                  onCloseRequest={() => this.setState({ isOpen: false })}
+                  onCloseRequest={() => this.setState({isOpen: false})}
                />
             )}
          </div>
@@ -294,13 +334,14 @@ class UserRedux extends Component {
 }
 
 const mapStateToProps = (state) => {
-   return { listUsers: state.admin.users };
+   return {listUsers: state.admin.users};
 };
 
 const mapDispatchToProps = (dispatch) => {
    return {
       createNewUser: (data) => dispatch(actions.createNewUser(data)),
       fetchUserRedux: () => dispatch(actions.fetchALllUsersStart()),
+      editUserRedux: (data) => dispatch(actions.updateUser(data)),
    };
 };
 
