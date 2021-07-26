@@ -185,12 +185,14 @@ const updateUser = (data) => {
          if (user) {
             user.firstName = data.firstName;
             user.lastName = data.lastName;
-            user.image = data.image;
             user.address = data.address;
             user.phonenumber = data.phonenumber;
             user.gender = data.gender;
             user.roleId = data.roleId;
             user.positionId = data.positionId;
+            if (data.image && data.image !== '') {
+               user.image = data.image;
+            }
 
             await user.save();
             let allUsers = db.User.findAll();

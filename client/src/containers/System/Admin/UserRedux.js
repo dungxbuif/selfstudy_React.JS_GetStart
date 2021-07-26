@@ -6,7 +6,7 @@ import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 import * as actions from '../../../store/actions';
 import TableManageUser from './TableManageUser';
-import {CRUD_ACTIONS} from '../../../utils';
+import {CommonUtils} from '../../../utils';
 class UserRedux extends Component {
    initState = {
       email: '',
@@ -54,18 +54,23 @@ class UserRedux extends Component {
       return isValid;
    };
 
-   handleOnChangeImg = (event) => {
+   handleOnChangeImg = async (event) => {
       let data = event.target.files;
       let file = data[0];
-      let objURL = URL.createObjectURL(file);
+
       let tmpForm = {...this.state.form};
       tmpForm.image = file;
-      this.setState({
-         previewImgURL: objURL,
-         form: {
-            ...tmpForm,
-         },
-      });
+      if (file) {
+         let base64 = await CommonUtils.getBase64(file);
+         tmpForm.image = base64;
+         let objURL = URL.createObjectURL(file);
+         this.setState({
+            previewImgURL: objURL,
+            form: {
+               ...tmpForm,
+            },
+         });
+      }
    };
    previewClick = (event) => {
       if (this.state.previewImgURL !== '') {
@@ -85,11 +90,10 @@ class UserRedux extends Component {
 
    handleSaveUser = async () => {
       let tmpForm = {...this.state.form};
-      tmpForm.image = JSON.stringify(tmpForm.image);
-
       if (this.state.isEdit) {
          tmpForm.id = this.state.id;
          this.props.editUserRedux({...tmpForm});
+         this.setState({isEdit: false});
       } else {
          let isValid = this.checkValidateInput();
          if (!isValid) return;
@@ -101,6 +105,7 @@ class UserRedux extends Component {
    componentDidUpdate(prevProps, prevStates) {
       if (prevProps.listUsers !== this.props.listUsers) {
          this.setState({
+            previewImgURL: '',
             form: {...this.initState},
          });
       }
@@ -109,7 +114,14 @@ class UserRedux extends Component {
    onEdit = (item) => {
       let tmpItem = {...item};
       tmpItem.password = '';
+      let imageBase64 = '';
+      if (item.image) {
+         imageBase64 = new Buffer(item.image, 'base64').toString('binary');
+         tmpItem.image = '';
+      }
+
       this.setState({
+         previewImgURL: imageBase64,
          form: {...tmpItem},
          isEdit: true,
          id: item.id,
@@ -120,6 +132,7 @@ class UserRedux extends Component {
       this.setState({
          form: {...this.initState},
          isEdit: false,
+         previewImgURL: '',
       });
    };
 
@@ -283,14 +296,14 @@ class UserRedux extends Component {
                            <div
                               className="image-preview"
                               style={{
-                                 backgroundImage: `url(${this.state.previewImgURL})`,
-                                 backgroundSize: 'contain',
                                  cursor:
                                     this.state.previewImgURL === ''
                                        ? 'default'
                                        : 'pointer',
                               }}
-                              onClick={this.previewClick}></div>
+                              onClick={this.previewClick}>
+                              <img src={this.state.previewImgURL} />
+                           </div>
                         </div>
                      </div>
                      <div className="col-12 pt-3">

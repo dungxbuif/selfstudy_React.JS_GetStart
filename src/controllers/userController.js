@@ -1,4 +1,4 @@
-const { response } = require('express');
+const {response} = require('express');
 const userService = require('../services/userService');
 
 const handleLogin = async (req, res) => {
