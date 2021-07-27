@@ -1,6 +1,7 @@
 const express = require('express');
 const homeController = require('../controllers/homeController');
 const userController = require('../controllers/userController');
+const doctorController = require('../controllers/doctorController');
 let router = express.Router();
 
 let initWebRoutes = (app) => {
@@ -19,6 +20,9 @@ let initWebRoutes = (app) => {
    router.post('/api/create-new-user', userController.handleCreateNewUsers);
    router.put('/api/update-user', userController.handleUpdateUser);
    router.delete('/api/delete-user', userController.handleDeleteUsers);
+
+   router.get('/api/get-top-doctor-home', doctorController.getTopDoctorHome);
+
    return app.use('/', router);
 };
 

@@ -4,6 +4,7 @@ const route = require('./route');
 const cors = require('cors');
 require('dotenv').config();
 const connectDB = require('./config/connectDB');
+const chalk = require('chalk');
 const app = express();
 
 //config app
@@ -20,5 +21,9 @@ connectDB;
 const port = process.env.PORT || 8000;
 
 app.listen(port, () => {
-   console.log('Server running on http://dungxbuif-localhost:' + port);
+   console.log(
+      chalk.bold.magenta(
+         'Server running on http://dungxbuif-localhost:' + port,
+      ),
+   );
 });

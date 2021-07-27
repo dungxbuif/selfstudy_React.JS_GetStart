@@ -4,7 +4,7 @@ import {
    getAllUsers,
    deleteUserService,
    updateUserService,
-   editUserService,
+   getTopDoctorHomeService,
 } from '../../services/userService';
 import {toast} from 'react-toastify';
 
@@ -39,14 +39,18 @@ export const fetchALllUsersStart = () => {
    return async (dispatch, getState) => {
       try {
          let res = await getAllUsers('ALL');
+         console.log('test', res1);
          if (res && res.code === 0) {
             dispatch(fetchALllUsersSuccess(res.data));
+            toast.success('Load all users succeed!!');
          } else {
             dispatch(fetchALllUsersFailed());
+            toast.error('Load all users failed!!');
          }
       } catch (e) {
          dispatch(fetchALllUsersFailed());
          console.log('fetchALllUsersFailed err', e);
+         toast.error('Load all users failed!!');
       }
    };
 };
@@ -113,3 +117,5 @@ export const updateUserSuccess = () => ({
 export const updateUserFailed = () => ({
    type: actionTypes.UPDATE_USER_FAILED,
 });
+
+// let res1 = await getTopDoctorHomeService();
