@@ -117,4 +117,23 @@ export const updateUserFailed = () => ({
    type: actionTypes.UPDATE_USER_FAILED,
 });
 
+export const fetchTopDoctors = () => {
+   return async (dispatch, getState) => {
+      try {
+         let res = await getTopDoctorHomeService();
+         if (res && res.code === 0) {
+            dispatch({
+               type: actionTypes.FETCH_TOP_DOCTORS_SUCCESS,
+               dataDoctors: res.data,
+            });
+            toast.success('Get doctor succeeded!!');
+         } else {
+            dispatch({
+               type: actionTypes.FETCH_TOP_DOCTORS_FAILED,
+            });
+            toast.error('Get doctor error!!');
+         }
+      } catch (e) {}
+   };
+};
 // let res1 = await getTopDoctorHomeService();

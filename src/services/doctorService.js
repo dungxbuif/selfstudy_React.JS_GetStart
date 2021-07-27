@@ -12,12 +12,12 @@ const getTopDoctorHome = async (limit) => {
             },
             include: [
                {
-                  model: db.Allcode,
+                  model: db.Allcodes,
                   as: 'positionData',
                   attributes: ['valueVi', 'valueEn'],
                },
                {
-                  model: db.Allcode,
+                  model: db.Allcodes,
                   as: 'genderData',
                   attributes: ['valueVi', 'valueEn'],
                },

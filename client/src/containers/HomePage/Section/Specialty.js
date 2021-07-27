@@ -4,11 +4,32 @@ import './Specialty.scss';
 import Slider from 'react-slick';
 import '../../../../node_modules/slick-carousel/slick/slick.css';
 import '../../../../node_modules/slick-carousel/slick/slick-theme.css';
-import * as action from '../../../store/actions';
+import * as actions from '../../../store/actions';
+import {LANGUAGES} from '../../../utils';
 class Specialty extends Component {
-   componentDidMount() {}
+   constructor(props) {
+      super(props);
+      this.state = {
+         arrDoctors: [],
+      };
+   }
+
+   componentDidUpdate(prevProps, prevStates, snapshot) {
+      if (prevProps.topDoctorsRedux !== this.props.topDoctorsRedux) {
+         this.setState({
+            arrDoctors: this.props.topDoctorsRedux,
+         });
+      }
+   }
+
+   componentDidMount() {
+      this.props.loadTopDoctors();
+   }
 
    render() {
+      let allDoctors = this.state.arrDoctors;
+      allDoctors = allDoctors.concat(allDoctors).concat(allDoctors);
+      let language = this.props.language;
       let settings = {
          dots: false,
          infinite: true,
@@ -24,30 +45,26 @@ class Specialty extends Component {
                   <button>Xem thêm</button>
                </div>
                <Slider {...settings} className="specialty-slider container">
-                  <div className="specialty-body text-left ">
-                     <img src="https://cdn.bookingcare.vn/fr/w300/2019/12/13/120331-co-xuong-khop.jpg" />
-                     <div>Cơ xương khớp</div>
-                  </div>
-                  <div className="specialty-body text-left">
-                     <img src="https://cdn.bookingcare.vn/fr/w300/2019/12/13/120331-co-xuong-khop.jpg" />
-                     <div>Cơ xương khớp</div>
-                  </div>
-                  <div className="specialty-body text-left ">
-                     <img src="https://cdn.bookingcare.vn/fr/w300/2019/12/13/120331-co-xuong-khop.jpg" />
-                     <div>Cơ xương khớp</div>
-                  </div>
-                  <div className="specialty-body text-left ">
-                     <img src="https://cdn.bookingcare.vn/fr/w300/2019/12/13/120331-co-xuong-khop.jpg" />
-                     <div>Cơ xương khớp</div>
-                  </div>
-                  <div className="specialty-body text-left ">
-                     <img src="https://cdn.bookingcare.vn/fr/w300/2019/12/13/120331-co-xuong-khop.jpg" />
-                     <div>Cơ xương khớp</div>
-                  </div>
-                  <div className="specialty-body text-left ">
-                     <img src="https://cdn.bookingcare.vn/fr/w300/2019/12/13/120331-co-xuong-khop.jpg" />
-                     <div>Cơ xương khớp</div>
-                  </div>
+                  {allDoctors &&
+                     allDoctors.length &&
+                     allDoctors.map((item, index) => {
+                        let nameVi = `${item.positionData.valueVi}: ${item.lastName} ${item.firstName}`;
+                        let nameEn = `${item.positionData.valueEn}: ${item.firstName} ${item.lastName}`;
+                        return (
+                           <div
+                              key={index}
+                              className="specialty-body text-left ">
+                              <img
+                                 src={new Buffer(item.image, 'base64').toString(
+                                    'binary',
+                                 )}
+                              />
+                              <div>
+                                 {language === LANGUAGES.VI ? nameVi : nameEn}
+                              </div>
+                           </div>
+                        );
+                     })}
                </Slider>
             </div>
          </div>
@@ -59,11 +76,14 @@ const mapStateToProps = (state) => {
    return {
       isLoggedIn: state.user.isLoggedIn,
       language: state.app.language,
+      topDoctorsRedux: state.admin.topDoctors,
    };
 };
 
 const mapDispatchToProps = (dispatch) => {
-   return {};
+   return {
+      loadTopDoctors: async () => await dispatch(actions.fetchTopDoctors()),
+   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Specialty);

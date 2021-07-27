@@ -2,6 +2,7 @@ import actionTypes from '../actions/actionTypes';
 
 const initialState = {
    users: [],
+   topDoctors: [],
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -13,6 +14,16 @@ const adminReducer = (state = initialState, action) => {
          };
       case actionTypes.FETCH_ALL_USERS_FAILED:
          state.user = [];
+         return {
+            ...state,
+         };
+      case actionTypes.FETCH_TOP_DOCTORS_SUCCESS:
+         state.topDoctors = action.dataDoctors;
+         return {
+            ...state,
+         };
+      case actionTypes.FETCH_TOP_DOCTORS_SUCCESS:
+         state.topDoctors = [];
          return {
             ...state,
          };
