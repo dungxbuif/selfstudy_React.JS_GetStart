@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import './Specialty.scss';
 import Slider from 'react-slick';
 import '../../../../node_modules/slick-carousel/slick/slick.css';
 import '../../../../node_modules/slick-carousel/slick/slick-theme.css';
-
+import * as action from '../../../store/actions';
 class Specialty extends Component {
+   componentDidMount() {}
+
    render() {
       let settings = {
          dots: false,
@@ -17,7 +19,7 @@ class Specialty extends Component {
       return (
          <div className="section-specialty">
             <div className="specialty-container row">
-               <div className="specialty-header py-4 d-flex justify-content-between">
+               <div className="specialty-header w-100 py-4 d-flex justify-content-between">
                   <h2>Chuyên khoa phổ biến</h2>
                   <button>Xem thêm</button>
                </div>

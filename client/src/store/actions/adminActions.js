@@ -39,7 +39,6 @@ export const fetchALllUsersStart = () => {
    return async (dispatch, getState) => {
       try {
          let res = await getAllUsers('ALL');
-         console.log('test', res1);
          if (res && res.code === 0) {
             dispatch(fetchALllUsersSuccess(res.data));
             toast.success('Load all users succeed!!');

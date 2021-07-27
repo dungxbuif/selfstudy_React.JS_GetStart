@@ -1,9 +1,9 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
-import { ConnectedRouter as Router } from 'connected-react-router';
-import { history } from '../redux';
-import { ToastContainer } from 'react-toastify';
+import React, {Component, Fragment} from 'react';
+import {connect} from 'react-redux';
+import {Route, Switch} from 'react-router-dom';
+import {ConnectedRouter as Router} from 'connected-react-router';
+import {history} from '../redux';
+import {ToastContainer} from 'react-toastify';
 import HomePage from './HomePage/HomePage';
 
 import {
@@ -11,28 +11,28 @@ import {
    userIsNotAuthenticated,
 } from '../hoc/authentication';
 
-import { path } from '../utils';
+import {path} from '../utils';
 
 import Home from '../routes/Home';
 // import Login from '../routes/Login';
 import Login from './Auth/Login';
 import System from '../routes/System';
 
-import { CustomToastCloseButton } from '../components/CustomToast';
+import {CustomToastCloseButton} from '../components/CustomToast';
 
 import CustomScrollbars from '../components/CustomScrollbars';
 
 class App extends Component {
    handlePersistorState = () => {
-      const { persistor } = this.props;
-      let { bootstrapped } = persistor.getState();
+      const {persistor} = this.props;
+      let {bootstrapped} = persistor.getState();
       if (bootstrapped) {
          if (this.props.onBeforeLift) {
             Promise.resolve(this.props.onBeforeLift())
-               .then(() => this.setState({ bootstrapped: true }))
-               .catch(() => this.setState({ bootstrapped: true }));
+               .then(() => this.setState({bootstrapped: true}))
+               .catch(() => this.setState({bootstrapped: true}));
          } else {
-            this.setState({ bootstrapped: true });
+            this.setState({bootstrapped: true});
          }
       }
    };
@@ -50,8 +50,7 @@ class App extends Component {
                   {/* {this.props.isLoggedIn && <Header />} */}
 
                   <div className="content-container">
-                     <CustomScrollbars
-                        style={{ height: '100vh', width: '100%' }}>
+                     <CustomScrollbars style={{height: '100vh', width: '100%'}}>
                         <Switch>
                            <Route path={path.HOME} exact component={Home} />
                            <Route
