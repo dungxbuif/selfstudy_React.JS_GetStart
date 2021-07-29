@@ -126,12 +126,12 @@ export const fetchTopDoctors = () => {
                type: actionTypes.FETCH_TOP_DOCTORS_SUCCESS,
                dataDoctors: res.data,
             });
-            toast.success('Get doctor succeeded!!');
+            console.log('Get doctor succeeded!!');
          } else {
             dispatch({
                type: actionTypes.FETCH_TOP_DOCTORS_FAILED,
             });
-            toast.error('Get doctor error!!');
+            console.log('Get doctor error!!');
          }
       } catch (e) {}
    };

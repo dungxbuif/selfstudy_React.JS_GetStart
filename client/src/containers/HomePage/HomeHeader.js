@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
 import './HomeHeader.scss';
-import { FormattedMessage } from 'react-intl';
-import { LANGUAGES } from '../../utils/constant';
-import { changeLangugeApp } from '../../store/actions/appActions';
+import {FormattedMessage} from 'react-intl';
+import {LANGUAGES} from '../../utils/constant';
+import {changeLangugeApp} from '../../store/actions/appActions';
+import image from '../../assets/images/header';
 class HomeHeader extends Component {
    changLanguge = (lang) => {
       this.props.changeLangugeAppRedux(lang);
@@ -94,7 +95,7 @@ class HomeHeader extends Component {
                </div>
             </div>
             <div className="home-banner">
-               <div className="banner-search">
+               <div className="banner-search ">
                   <div className="banner-search-container">
                      <h1>
                         Nền tảng y tế <br></br>
@@ -113,43 +114,67 @@ class HomeHeader extends Component {
                      <div className="tai-ungdung">
                         <img
                            alt="Tải ứng dụng BookingCare trên Android"
-                           src="https://bookingcare.vn//assets/icon/google-play-badge.svg"
+                           src={image.android}
                            width="108"
                            height="32"
                         />
                         <img
                            alt="Tải ứng dụng BookingCare trên iOS"
-                           src="https://bookingcare.vn//assets/icon/app-store-badge-black.svg"
+                           src={image.ios}
                            width="108"
                            height="32"
                         />
                      </div>
                   </div>
                </div>
-               <div className="luachon">
+               <div className="luachon py-2">
                   <ul>
                      <li>
-                        <div className="dichvu kham-chuyenkhoa luoi-tai"></div>
+                        <div
+                           className="dichvu kham-chuyenkhoa luoi-tai"
+                           style={{
+                              backgroundImage: `url(${image.chuyenkhoa})`,
+                           }}></div>
                         Khám Chuyên khoa
                      </li>
                      <li>
-                        <div className="dichvu kham-tuxa luoi-tai"></div>
+                        <div
+                           className="dichvu kham-tuxa luoi-tai"
+                           style={{
+                              backgroundImage: `url(${image.tuxa})`,
+                           }}></div>
                         Khám từ xa
                      </li>
                      <li>
-                        <div className="dichvu kham-tongquat luoi-tai"></div>
+                        <div
+                           className="dichvu kham-tongquat luoi-tai"
+                           style={{
+                              backgroundImage: `url(${image.tongquat})`,
+                           }}></div>
                         Khám tổng quát
                      </li>
                      <li>
-                        <div className="dichvu dichvu-xetnghiem luoi-tai"></div>
+                        <div
+                           className="dichvu dichvu-xetnghiem luoi-tai"
+                           style={{
+                              backgroundImage: `url(${image.dichvu})`,
+                           }}></div>
                         Xét nghiệm y học
                      </li>
                      <li>
-                        <div className="dichvu dichvu-xetnghiem luoi-tai"></div>
+                        <div
+                           className="dichvu dichvu-xetnghiem luoi-tai"
+                           style={{
+                              backgroundImage: `url(${image.suckhoe})`,
+                           }}></div>
                         Sức khỏe tinh thần
                      </li>
                      <li>
-                        <div className="dichvu kham-nhakhoa luoi-tai"></div>
+                        <div
+                           className="dichvu kham-nhakhoa luoi-tai"
+                           style={{
+                              backgroundImage: `url(${image.nhakhoa})`,
+                           }}></div>
                         Khám nha khoa
                      </li>
                   </ul>
@@ -168,7 +193,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-   return { changeLangugeAppRedux: (lang) => dispatch(changeLangugeApp(lang)) };
+   return {changeLangugeAppRedux: (lang) => dispatch(changeLangugeApp(lang))};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeHeader);

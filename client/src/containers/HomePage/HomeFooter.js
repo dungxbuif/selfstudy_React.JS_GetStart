@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { LANGUAGES } from '../../utils/constant';
-import { changeLangugeApp } from '../../store/actions/appActions';
+import React, {Component} from 'react';
+import {Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {FormattedMessage} from 'react-intl';
+import {LANGUAGES} from '../../utils/constant';
+import {changeLangugeApp} from '../../store/actions/appActions';
 class HomeFooter extends Component {
    changLanguge = (lang) => {
       this.props.changeLangugeAppRedux(lang);
@@ -11,7 +11,16 @@ class HomeFooter extends Component {
 
    render() {
       let language = this.props.language;
-      return <div style={{background: '#64b9e5', height: '100px'}}>@BuifDungx</div>;
+      return (
+         <div
+            style={{
+               background: '#64b9e5',
+               height: '100px',
+               marginTop: '1000px',
+            }}>
+            @BuifDungx
+         </div>
+      );
    }
 }
 
@@ -23,7 +32,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-   return { changeLangugeAppRedux: (lang) => dispatch(changeLangugeApp(lang)) };
+   return {changeLangugeAppRedux: (lang) => dispatch(changeLangugeApp(lang))};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeFooter);

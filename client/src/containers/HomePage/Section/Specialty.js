@@ -28,7 +28,6 @@ class Specialty extends Component {
 
    render() {
       let allDoctors = this.state.arrDoctors;
-      allDoctors = allDoctors.concat(allDoctors).concat(allDoctors);
       let language = this.props.language;
       let settings = {
          dots: false,
@@ -38,7 +37,7 @@ class Specialty extends Component {
          slidesToScroll: 2,
       };
       return (
-         <div className="section-specialty">
+         <div className="section-specialty pt-2 pb-4">
             <div className="specialty-container row">
                <div className="specialty-header w-100 py-4 d-flex justify-content-between">
                   <h2>Chuyên khoa phổ biến</h2>
