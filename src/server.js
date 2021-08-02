@@ -22,8 +22,6 @@ const port = process.env.PORT || 8000;
 //Thay đổi
 app.listen(port, () => {
    console.log(
-      chalk.bold.magenta(
-         'Server running on http://dungxbuif-localhost:' + port,
-      ),
+      chalk.bold.green('Server running on http://dungxbuif-localhost:' + port),
    );
 });
