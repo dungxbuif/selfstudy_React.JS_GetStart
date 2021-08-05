@@ -17,50 +17,20 @@ const getTopDoctorHome = async (req, res) => {
    }
 };
 
-// const handleGetAllUsers = async (req, res) => {
-//    let id = req.query.id;
-//    let users = await userService.getAllUsers(id);
+const getAllDoctors = async (req, res) => {
+   try {
+      let response = await doctorService.getAllDoctors();
+      return res.status(200).json(response);
+   } catch (e) {
+      console.log(e);
+      return res.status(500).json({
+         code: -1,
+         message: 'Error from server',
+      });
+   }
+};
 
-//    if (!id) {
-//       return res.status(500).json({
-//          code: 1,
-//          message: 'Missing required parameters!!!',
-//          data: [],
-//       });
-//    }
-
-//    return res.status(200).json({
-//       code: 0,
-//       message: 'OK',
-//       data: users,
-//    });
-// };
-
-// const handleCreateNewUsers = async (req, res) => {
-//    let message = await userService.createNewUser(req.body);
-//    return res.status(200).json(message);
-// };
-
-// const handleUpdateUser = async (req, res) => {
-//    let data = req.body;
-//    let message = await userService.updateUser(data);
-//    return res.status(200).json(message);
-// };
-
-// const handleDeleteUsers = async (req, res) => {
-//    if (!req.body.id)
-//       return res.status(500).json({
-//          code: 1,
-//          message: 'Missing required parameters',
-//       });
-
-//    let message = await userService.deleteUser(req.body.id);
-//    return res.status(200).json(message);
-// };
 module.exports = {
    getTopDoctorHome,
-   // handleGetAllUsers,
-   // handleCreateNewUsers,
-   // handleUpdateUser,
-   // handleDeleteUsers,
+   getAllDoctors,
 };

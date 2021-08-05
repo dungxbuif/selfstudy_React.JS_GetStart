@@ -22,6 +22,7 @@ let initWebRoutes = (app) => {
    router.delete('/api/delete-user', userController.handleDeleteUsers);
 
    router.get('/api/get-top-doctor-home', doctorController.getTopDoctorHome);
+   router.get('/api/get-all-doctors', doctorController.getAllDoctors);
 
    return app.use('/', router);
 };

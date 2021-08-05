@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { connect } from 'react-redux';
-import { emitter } from '../../utils/emitter';
+import React, {Component} from 'react';
+import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+import {connect} from 'react-redux';
+import {emitter} from '../../utils/emitter';
 class ModalUser extends Component {
    initState = {
       email: '',
@@ -25,7 +25,7 @@ class ModalUser extends Component {
    componentDidUpdate(prevProps) {
       if (this.props.addOrUp === 'update') {
          if (this.props.currentData !== prevProps.currentData) {
-            this.setState({ ...this.props.currentData });
+            this.setState({...this.props.currentData});
          }
       }
    }
@@ -56,7 +56,7 @@ class ModalUser extends Component {
    };
 
    handleOnChange = (event, id) => {
-      let tmpState = { ...this.state };
+      let tmpState = {...this.state};
       tmpState[id] = event.target.value;
       this.setState({
          ...tmpState,
@@ -73,7 +73,7 @@ class ModalUser extends Component {
 
    listenEmitter = () => {
       emitter.on('EVENT_CLEAR_MODAL_DATA', () => {
-         this.setState({ ...this.initState });
+         this.setState({...this.initState});
       });
    };
 
