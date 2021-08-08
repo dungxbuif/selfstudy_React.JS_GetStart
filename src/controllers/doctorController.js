@@ -1,4 +1,3 @@
-const {query} = require('express');
 const doctorService = require('../services/doctorService');
 
 const getTopDoctorHome = async (req, res) => {
@@ -30,7 +29,21 @@ const getAllDoctors = async (req, res) => {
    }
 };
 
+const postInfoDoctor = async (req, res) => {
+   try {
+      let response = await doctorService.saveInfoDoctor(req.body);
+      return res.status(200).json(response);
+   } catch (e) {
+      console.log(e);
+      return res.status(500).json({
+         code: -1,
+         message: 'Error from server',
+      });
+   }
+};
+
 module.exports = {
    getTopDoctorHome,
    getAllDoctors,
+   postInfoDoctor,
 };

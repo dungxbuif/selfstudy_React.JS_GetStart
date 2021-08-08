@@ -5,6 +5,8 @@ import {
    deleteUserService,
    updateUserService,
    getTopDoctorHomeService,
+   getAllDoctors,
+   postInfoDoctor,
 } from '../../services/userService';
 import {toast} from 'react-toastify';
 
@@ -90,7 +92,7 @@ export const deleteUserFailed = () => ({
 });
 
 export const updateUser = (data) => {
-   return async (dispatch, getState) => {
+   return async (dispatch) => {
       try {
          let res = await updateUserService(data);
          if (res && res.code === 0) {
@@ -118,7 +120,7 @@ export const updateUserFailed = () => ({
 });
 
 export const fetchTopDoctors = () => {
-   return async (dispatch, getState) => {
+   return async (dispatch) => {
       try {
          let res = await getTopDoctorHomeService();
          if (res && res.code === 0) {
@@ -136,4 +138,47 @@ export const fetchTopDoctors = () => {
       } catch (e) {}
    };
 };
-// let res1 = await getTopDoctorHomeService();
+
+export const fetchALllDoctors = () => {
+   return async (dispatch) => {
+      try {
+         let res = await getAllDoctors();
+         if (res && res.code === 0) {
+            dispatch({
+               type: actionTypes.FETCH_All_DOCTORS_SUCCESS,
+               dataDoctors: res.data,
+            });
+            toast.success('Load all doctors succeed!!');
+         } else {
+            dispatch({type: actionTypes.FETCH_All_DOCTORS_FAILED});
+            toast.error('Load all users failed!!');
+         }
+      } catch (e) {
+         dispatch(fetchALllUsersFailed());
+         console.log('fetchALllUsersFailed err', e);
+         toast.error('Load all users failed!!');
+      }
+   };
+};
+
+export const createDoctorInfo = (data) => {
+   console.log(data);
+   return async (dispatch) => {
+      try {
+         let res = await postInfoDoctor(data);
+         if (res && res.code === 0) {
+            dispatch({
+               type: actionTypes.CREATE_DOCTOR_INFO_SUCCEED,
+            });
+            toast.success('Create doctor info succeed!!');
+         } else {
+            dispatch({type: actionTypes.CREATE_DOCTOR_INFO_FAILED});
+            toast.error('Create doctor info failed!!');
+         }
+      } catch (e) {
+         dispatch(fetchALllUsersFailed());
+         console.log('fetchALllUsersFailed err', e);
+         toast.error('Load all users failed!!');
+      }
+   };
+};

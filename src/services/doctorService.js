@@ -55,7 +55,34 @@ const getAllDoctors = async () => {
    });
 };
 
+const saveInfoDoctor = async (dataInput) => {
+   return new Promise(async (resolve, reject) => {
+      try {
+         if (!dataInput.doctorId) {
+            resolve({
+               code: 1,
+               message: 'Missing parameters',
+            });
+         } else {
+            await db.Markdown.create({
+               contentMarkdown: dataInput.contentMarkdown,
+               contentHTML: dataInput.contentHTML,
+               description: dataInput.description,
+               doctorId: dataInput.id,
+            });
+            resolve({
+               code: 0,
+               message: 'Succeed',
+            });
+         }
+      } catch (e) {
+         reject(e);
+      }
+   });
+};
+
 module.exports = {
    getTopDoctorHome,
    getAllDoctors,
+   saveInfoDoctor,
 };
