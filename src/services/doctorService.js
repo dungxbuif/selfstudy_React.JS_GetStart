@@ -68,7 +68,7 @@ const saveInfoDoctor = async (dataInput) => {
                contentMarkdown: dataInput.contentMarkdown,
                contentHTML: dataInput.contentHTML,
                description: dataInput.description,
-               doctorId: dataInput.id,
+               doctorId: +dataInput.doctorId,
             });
             resolve({
                code: 0,
@@ -81,8 +81,39 @@ const saveInfoDoctor = async (dataInput) => {
    });
 };
 
+const getDetailDoctor = async (doctorID) => {
+   return new Promise(async (resolve, reject) => {
+      try {
+         if (!doctorID)
+            resolve({
+               code: -1,
+               message: 'Missing required prameters',
+            });
+
+         const data = await db.User.findOne({
+            where: {id: doctorID},
+            attributes: {exclude: ['password', 'image']},
+            include: {
+               model: db.Markdown,
+               as: 'markDownData',
+            },
+            raw: true,
+            nest: true,
+         });
+
+         resolve({
+            code: 0,
+            data,
+         });
+      } catch (e) {
+         reject(e);
+      }
+   });
+};
+
 module.exports = {
    getTopDoctorHome,
    getAllDoctors,
    saveInfoDoctor,
+   getDetailDoctor,
 };
