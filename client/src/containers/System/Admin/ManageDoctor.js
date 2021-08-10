@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import 'react-image-lightbox/style.css';
 import * as actions from '../../../store/actions';
 import MarkdownIt from 'markdown-it';
@@ -7,8 +7,8 @@ import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 import './ManageDoctor.scss';
 import Select from 'react-select';
-
-import {LANGUAGES} from '../../../utils';
+import { getDoctorDetailInfo } from '../../../services/userService';
+import { LANGUAGES } from '../../../utils';
 
 const mdParser = new MarkdownIt();
 
@@ -16,17 +16,35 @@ class ManageTable extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         contentMarkDown: '',
+         contentMarkdown: '',
          contentHTML: '',
          selectedDoctor: '',
          description: '',
+         hasExisted: false,
          allDoctors: [],
          listDoctors: [],
       };
    }
 
-   handleChange = (selectedDoctor) => {
-      this.setState({selectedDoctor});
+   handleChange = async (selectedDoctor) => {
+      this.setState({ selectedDoctor });
+
+      let res = await getDoctorDetailInfo(selectedDoctor.value);
+      if (res && res.code === 0 && res.data && res.data.markDownData) {
+         let markdown = res.data.markDownData;
+         this.setState({
+            contentMarkdown: markdown.contentMarkdown,
+            description: markdown.description,
+            hasExisted: true,
+         });
+      } else {
+         this.setState({
+            contentMarkdown: '',
+            description: '',
+            hasExisted: false,
+         });
+      }
+      console.log(res);
    };
 
    componentDidMount() {
@@ -44,7 +62,7 @@ class ManageTable extends Component {
 
    convertDataToSelect = () => {
       let arr = [...this.props.allDoctors];
-      let {language} = this.props;
+      let { language } = this.props;
 
       if (this.props.allDoctors && this.props.allDoctors.length > 0) {
          this.setState({
@@ -62,13 +80,13 @@ class ManageTable extends Component {
 
    handleEditorChange = (html) => {
       this.setState({
-         contentMarkDown: html.text,
+         contentMarkdown: html.text,
          contentHTML: html.html,
       });
    };
-   handleSaveContentMarkDown = () => {
+   handleSavecontentMarkdown = () => {
       this.props.createDoctorInfo({
-         contentMarkdown: this.state.contentMarkDown,
+         contentMarkdown: this.state.contentMarkdown,
          contentHTML: this.state.contentHTML,
          description: this.state.description,
          doctorId: this.state.selectedDoctor.value,
@@ -80,6 +98,7 @@ class ManageTable extends Component {
       });
    };
    render() {
+      let { hasExisted } = this.state;
       return (
          <div className="mange-doctor-container px-3">
             <h2 className="mange-doctor-title my-3  align-center text-center">
@@ -105,15 +124,16 @@ class ManageTable extends Component {
             </div>
             <div className="mange-doctor-editor">
                <MdEditor
-                  style={{height: '500px', width: '100%'}}
+                  style={{ height: '500px', width: '100%' }}
                   renderHTML={(text) => mdParser.render(text)}
                   onChange={this.handleEditorChange}
+                  value={this.state.contentMarkdown}
                />
             </div>
             <div
-               className="btn btn-primary mt-4"
-               onClick={this.handleSaveContentMarkDown}>
-               Lưu thông tin
+               className={hasExisted ? 'btn btn-info mt-4' : 'btn btn-primary mt-4'}
+               onClick={this.handleSavecontentMarkdown}>
+               {hasExisted ? 'Cập nhật thông tin' : 'Lưu thông tin'}
             </div>
          </div>
       );
