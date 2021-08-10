@@ -1,7 +1,7 @@
 import axios from '../axios';
 
 const handleLogin = (email, password) => {
-   return axios.post('api/login', {email, password});
+   return axios.post('api/login', { email, password });
 };
 
 const getAllUsers = (id) => {
@@ -17,11 +17,11 @@ const updateUserService = (data) => {
 };
 
 const deleteUserService = (id) => {
-   return axios.delete(`/api/delete-user`, {data: {id}});
+   return axios.delete(`/api/delete-user`, { data: { id } });
 };
 
 const editUserService = (id) => {
-   return axios.delete(`/api/delete-user`, {data: {id}});
+   return axios.delete(`/api/delete-user`, { data: { id } });
 };
 
 const getTopDoctorHomeService = (limit) => {
@@ -36,6 +36,10 @@ const postInfoDoctor = (data) => {
    return axios.post(`api/post-info-doctors`, data);
 };
 
+const getDoctorDetailInfo = (doctorID) => {
+   return axios.get(`/api/get-detail-doctor-by-id?doctorID=${doctorID}`);
+};
+
 export {
    handleLogin,
    getAllUsers,
@@ -46,4 +50,5 @@ export {
    getTopDoctorHomeService,
    getAllDoctors,
    postInfoDoctor,
+   getDoctorDetailInfo,
 };

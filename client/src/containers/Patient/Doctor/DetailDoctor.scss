@@ -1,18 +1,14 @@
 .doctor-detail-container {
    height: 500px;
-   border: 3px solid wheat;
    margin-top: 72px;
    padding-top: 16px;
    .intro-doctor {
-      height: 75%;
       .intro-doctor-left {
-         width: 20%;
-         border: 3px solid aquamarine;
+         padding-right: 16px;
       }
 
       .intro-doctor-right {
-         width: 80%;
-         border: 3px solid blueviolet;
+         width: 520px;
          padding-left: 10px;
          .info-top {
             font-size: 20px;

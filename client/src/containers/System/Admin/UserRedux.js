@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import {FormattedMessage} from 'react-intl';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
 import './UserRedux.scss';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 import * as actions from '../../../store/actions';
 import TableManageUser from './TableManageUser';
-import {CommonUtils} from '../../../utils';
+import { CommonUtils } from '../../../utils';
 class UserRedux extends Component {
    initState = {
       email: '',
@@ -36,14 +36,7 @@ class UserRedux extends Component {
 
    checkValidateInput = () => {
       let isValid = true;
-      let arrInput = [
-         'email',
-         'password',
-         'firstName',
-         'lastName',
-         'phonenumber',
-         'address',
-      ];
+      let arrInput = ['email', 'password', 'firstName', 'lastName', 'phonenumber', 'address'];
       for (let i = 0; i < arrInput.length; i++) {
          if (!this.state.form[arrInput[i]]) {
             isValid = false;
@@ -58,7 +51,7 @@ class UserRedux extends Component {
       let data = event.target.files;
       let file = data[0];
 
-      let tmpForm = {...this.state.form};
+      let tmpForm = { ...this.state.form };
       tmpForm.image = file;
       if (file) {
          let base64 = await CommonUtils.getBase64(file);
@@ -72,7 +65,7 @@ class UserRedux extends Component {
          });
       }
    };
-   previewClick = (event) => {
+   previewClick = () => {
       if (this.state.previewImgURL !== '') {
          this.setState({
             isOpen: true,
@@ -81,38 +74,38 @@ class UserRedux extends Component {
    };
 
    handleOnChange = (event, id) => {
-      let tmpState = {...this.state.form};
+      let tmpState = { ...this.state.form };
       tmpState[id] = event.target.value;
       this.setState({
-         form: {...tmpState},
+         form: { ...tmpState },
       });
    };
 
    handleSaveUser = async () => {
-      let tmpForm = {...this.state.form};
+      let tmpForm = { ...this.state.form };
       if (this.state.isEdit) {
          tmpForm.id = this.state.id;
-         this.props.editUserRedux({...tmpForm});
-         this.setState({isEdit: false});
+         this.props.editUserRedux({ ...tmpForm });
+         this.setState({ isEdit: false });
       } else {
          let isValid = this.checkValidateInput();
          if (!isValid) return;
-         await this.props.createNewUser({...tmpForm});
+         await this.props.createNewUser({ ...tmpForm });
          this.props.fetchUserRedux();
       }
    };
 
-   componentDidUpdate(prevProps, prevStates) {
+   componentDidUpdate(prevProps) {
       if (prevProps.listUsers !== this.props.listUsers) {
          this.setState({
             previewImgURL: '',
-            form: {...this.initState},
+            form: { ...this.initState },
          });
       }
    }
 
    onEdit = (item) => {
-      let tmpItem = {...item};
+      let tmpItem = { ...item };
       tmpItem.password = '';
       let imageBase64 = '';
       if (item.image) {
@@ -122,7 +115,7 @@ class UserRedux extends Component {
 
       this.setState({
          previewImgURL: imageBase64,
-         form: {...tmpItem},
+         form: { ...tmpItem },
          isEdit: true,
          id: item.id,
       });
@@ -130,7 +123,7 @@ class UserRedux extends Component {
 
    handleCancelEdit = () => {
       this.setState({
-         form: {...this.initState},
+         form: { ...this.initState },
          isEdit: false,
          previewImgURL: '',
       });
@@ -154,9 +147,7 @@ class UserRedux extends Component {
                         <input
                            className="form-control"
                            type="email"
-                           onChange={(event) =>
-                              this.handleOnChange(event, 'email')
-                           }
+                           onChange={(event) => this.handleOnChange(event, 'email')}
                            value={this.state.form.email}
                            disabled={this.state.isEdit ? true : false}
                         />
@@ -168,9 +159,7 @@ class UserRedux extends Component {
                         <input
                            className="form-control"
                            type="password"
-                           onChange={(event) =>
-                              this.handleOnChange(event, 'password')
-                           }
+                           onChange={(event) => this.handleOnChange(event, 'password')}
                            value={this.state.form.password}
                            disabled={this.state.isEdit ? true : false}
                         />
@@ -182,9 +171,7 @@ class UserRedux extends Component {
                         <input
                            className="form-control"
                            type="text"
-                           onChange={(event) =>
-                              this.handleOnChange(event, 'firstName')
-                           }
+                           onChange={(event) => this.handleOnChange(event, 'firstName')}
                            value={this.state.form.firstName}
                         />
                      </div>
@@ -195,9 +182,7 @@ class UserRedux extends Component {
                         <input
                            className="form-control"
                            type="text"
-                           onChange={(event) =>
-                              this.handleOnChange(event, 'lastName')
-                           }
+                           onChange={(event) => this.handleOnChange(event, 'lastName')}
                            value={this.state.form.lastName}
                         />
                      </div>
@@ -207,9 +192,7 @@ class UserRedux extends Component {
                         </label>
                         <input
                            className="form-control"
-                           onChange={(event) =>
-                              this.handleOnChange(event, 'phonenumber')
-                           }
+                           onChange={(event) => this.handleOnChange(event, 'phonenumber')}
                            value={this.state.form.phonenumber}
                         />
                      </div>
@@ -219,9 +202,7 @@ class UserRedux extends Component {
                         </label>
                         <input
                            className="form-control"
-                           onChange={(event) =>
-                              this.handleOnChange(event, 'address')
-                           }
+                           onChange={(event) => this.handleOnChange(event, 'address')}
                            value={this.state.form.address}
                         />
                      </div>
@@ -232,9 +213,7 @@ class UserRedux extends Component {
                         <select
                            name="gender"
                            className="form-control"
-                           onChange={(event) =>
-                              this.handleOnChange(event, 'gender')
-                           }
+                           onChange={(event) => this.handleOnChange(event, 'gender')}
                            value={this.state.form.gender}>
                            <option value="M">Male</option>
                            <option value="F">Female</option>
@@ -248,9 +227,7 @@ class UserRedux extends Component {
                         <select
                            name="roleId"
                            className="form-control"
-                           onChange={(event) =>
-                              this.handleOnChange(event, 'roleId')
-                           }
+                           onChange={(event) => this.handleOnChange(event, 'roleId')}
                            value={this.state.form.roleId}>
                            <option value="R1">Admin</option>
                            <option value="R2">Doctor</option>
@@ -264,9 +241,7 @@ class UserRedux extends Component {
                         <select
                            name="position"
                            className="form-control"
-                           onChange={(event) =>
-                              this.handleOnChange(event, 'positionId')
-                           }
+                           onChange={(event) => this.handleOnChange(event, 'positionId')}
                            value={this.state.form.positionId}>
                            <option value="P0">None</option>
                            <option value="P1">Master</option>
@@ -296,10 +271,7 @@ class UserRedux extends Component {
                            <div
                               className="image-preview"
                               style={{
-                                 cursor:
-                                    this.state.previewImgURL === ''
-                                       ? 'default'
-                                       : 'pointer',
+                                 cursor: this.state.previewImgURL === '' ? 'default' : 'pointer',
                               }}
                               onClick={this.previewClick}>
                               <img src={this.state.previewImgURL} />
@@ -309,9 +281,7 @@ class UserRedux extends Component {
                      <div className="col-12 pt-3">
                         {this.state.isEdit ? (
                            <>
-                              <button
-                                 className="btn btn-warning"
-                                 onClick={this.handleSaveUser}>
+                              <button className="btn btn-warning" onClick={this.handleSaveUser}>
                                  <FormattedMessage id="manage-user.saveEdit" />
                               </button>
                               <button
@@ -321,9 +291,7 @@ class UserRedux extends Component {
                               </button>
                            </>
                         ) : (
-                           <button
-                              className="btn btn-primary "
-                              onClick={this.handleSaveUser}>
+                           <button className="btn btn-primary " onClick={this.handleSaveUser}>
                               <FormattedMessage id="manage-user.save" />
                            </button>
                         )}
@@ -338,7 +306,7 @@ class UserRedux extends Component {
             {this.state.isOpen && (
                <Lightbox
                   mainSrc={this.state.previewImgURL}
-                  onCloseRequest={() => this.setState({isOpen: false})}
+                  onCloseRequest={() => this.setState({ isOpen: false })}
                />
             )}
          </div>
@@ -347,7 +315,7 @@ class UserRedux extends Component {
 }
 
 const mapStateToProps = (state) => {
-   return {listUsers: state.admin.users};
+   return { listUsers: state.admin.users };
 };
 
 const mapDispatchToProps = (dispatch) => {

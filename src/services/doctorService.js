@@ -5,7 +5,7 @@ const getTopDoctorHome = async (limit) => {
       try {
          let users = await db.User.findAll({
             limit,
-            where: {roleId: 'R2'},
+            where: { roleId: 'R2' },
             order: [['createdAt', 'DESC']],
             attributes: {
                exclude: ['password'],
@@ -39,7 +39,7 @@ const getAllDoctors = async () => {
    return new Promise(async (resolve, reject) => {
       try {
          const data = await db.User.findAll({
-            where: {roleId: 'R2'},
+            where: { roleId: 'R2' },
             attributes: {
                exclude: ['password', 'image'],
             },
@@ -81,7 +81,7 @@ const saveInfoDoctor = async (dataInput) => {
    });
 };
 
-const getDetailDoctor = async (doctorID) => {
+const getDetailDoctorByID = async (doctorID) => {
    return new Promise(async (resolve, reject) => {
       try {
          if (!doctorID)
@@ -91,15 +91,21 @@ const getDetailDoctor = async (doctorID) => {
             });
 
          const data = await db.User.findOne({
-            where: {id: doctorID},
-            attributes: {exclude: ['password', 'image']},
+            where: { id: doctorID },
+            attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'gender'] },
             include: {
                model: db.Markdown,
                as: 'markDownData',
             },
-            raw: true,
+            raw: false,
             nest: true,
          });
+
+         if (data && data.image) {
+            data.image = new Buffer(data.image, 'base64').toString('binary');
+         }
+
+         if (!data) data = {};
 
          resolve({
             code: 0,
@@ -115,5 +121,5 @@ module.exports = {
    getTopDoctorHome,
    getAllDoctors,
    saveInfoDoctor,
-   getDetailDoctor,
+   getDetailDoctorByID,
 };

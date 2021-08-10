@@ -2,8 +2,7 @@ const doctorService = require('../services/doctorService');
 
 const getTopDoctorHome = async (req, res) => {
    let limit = 10;
-   if (req.query.limit && req.query.limit !== 'undefined')
-      limit = +req.query.limit;
+   if (req.query.limit && req.query.limit !== 'undefined') limit = +req.query.limit;
    try {
       let response = await doctorService.getTopDoctorHome(limit);
       return res.status(200).json(response);
@@ -42,9 +41,9 @@ const postInfoDoctor = async (req, res) => {
    }
 };
 
-const getDetailDoctor = async (req, res) => {
+const getDetailDoctorByID = async (req, res) => {
    try {
-      let info = await doctorService.getDetailDoctor(req.query.id);
+      let info = await doctorService.getDetailDoctorByID(req.query.doctorID);
       return res.status(200).json(info);
    } catch (e) {
       console.log(e);
@@ -59,5 +58,5 @@ module.exports = {
    getTopDoctorHome,
    getAllDoctors,
    postInfoDoctor,
-   getDetailDoctor,
+   getDetailDoctorByID,
 };
