@@ -1,11 +1,13 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import './Specialty.scss';
 import Slider from 'react-slick';
 import '../../../../node_modules/slick-carousel/slick/slick.css';
 import '../../../../node_modules/slick-carousel/slick/slick-theme.css';
 import * as actions from '../../../store/actions';
-import {LANGUAGES} from '../../../utils';
+import { LANGUAGES } from '../../../utils';
+import { withRouter } from 'react-router';
+
 class Specialty extends Component {
    constructor(props) {
       super(props);
@@ -25,6 +27,11 @@ class Specialty extends Component {
    componentDidMount() {
       this.props.loadTopDoctors();
    }
+
+   handleViewDetailDoctor = (doctor) => {
+      console.log(doctor);
+      this.props.history.push(`detail-doctor/${doctor.id}`);
+   };
 
    render() {
       let allDoctors = this.state.arrDoctors;
@@ -52,15 +59,10 @@ class Specialty extends Component {
                         return (
                            <div
                               key={index}
-                              className="specialty-body text-left ">
-                              <img
-                                 src={new Buffer(item.image, 'base64').toString(
-                                    'binary',
-                                 )}
-                              />
-                              <div>
-                                 {language === LANGUAGES.VI ? nameVi : nameEn}
-                              </div>
+                              className="specialty-body text-left "
+                              onClick={() => this.handleViewDetailDoctor(item)}>
+                              <img src={new Buffer(item.image, 'base64').toString('binary')} />
+                              <div>{language === LANGUAGES.VI ? nameVi : nameEn}</div>
                            </div>
                         );
                      })}
@@ -85,4 +87,4 @@ const mapDispatchToProps = (dispatch) => {
    };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Specialty);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Specialty));
