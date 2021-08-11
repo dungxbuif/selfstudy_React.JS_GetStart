@@ -64,12 +64,29 @@ const saveInfoDoctor = async (dataInput) => {
                message: 'Missing parameters',
             });
          } else {
-            await db.Markdown.create({
-               contentMarkdown: dataInput.contentMarkdown,
-               contentHTML: dataInput.contentHTML,
-               description: dataInput.description,
-               doctorId: +dataInput.doctorId,
-            });
+            if (dataInput.action === 'CREATE')
+               await db.Markdown.create({
+                  contentMarkdown: dataInput.contentMarkdown,
+                  contentHTML: dataInput.contentHTML,
+                  description: dataInput.description,
+                  doctorId: +dataInput.doctorId,
+               });
+            else if (dataInput.action === 'EDIT') {
+               let doctor = await db.Markdown.findOne({
+                  where: {
+                     doctorId: +dataInput.doctorId,
+                  },
+                  raw: false,
+               });
+
+               if (doctor) {
+                  doctor.contentMarkdown = dataInput.contentMarkdown;
+                  doctor.contentHTML = dataInput.contentHTML;
+                  doctor.description = dataInput.description;
+                  doctor.updatedAt = new Date();
+                  await doctor.save();
+               }
+            }
             resolve({
                code: 0,
                message: 'Succeed',

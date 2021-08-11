@@ -8,7 +8,7 @@ import 'react-markdown-editor-lite/lib/index.css';
 import './ManageDoctor.scss';
 import Select from 'react-select';
 import { getDoctorDetailInfo } from '../../../services/userService';
-import { LANGUAGES } from '../../../utils';
+import { LANGUAGES, CRUD_ACTIONS } from '../../../utils';
 
 const mdParser = new MarkdownIt();
 
@@ -84,12 +84,14 @@ class ManageTable extends Component {
          contentHTML: html.html,
       });
    };
-   handleSavecontentMarkdown = () => {
+   handleSaveContentMarkdown = () => {
+      let { hasExisted } = this.state;
       this.props.createDoctorInfo({
          contentMarkdown: this.state.contentMarkdown,
          contentHTML: this.state.contentHTML,
          description: this.state.description,
          doctorId: this.state.selectedDoctor.value,
+         action: hasExisted ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE,
       });
    };
    handleOnChangeTextDesc = (event) => {
@@ -132,7 +134,7 @@ class ManageTable extends Component {
             </div>
             <div
                className={hasExisted ? 'btn btn-info mt-4' : 'btn btn-primary mt-4'}
-               onClick={this.handleSavecontentMarkdown}>
+               onClick={() => this.handleSaveContentMarkdown()}>
                {hasExisted ? 'Cập nhật thông tin' : 'Lưu thông tin'}
             </div>
          </div>
