@@ -5,9 +5,17 @@ import { FormattedMessage } from 'react-intl';
 import { LANGUAGES } from '../../utils/constant';
 import { changeLangugeApp } from '../../store/actions/appActions';
 import image from '../../assets/images/header';
+import { withRouter } from 'react-router';
 class HomeHeader extends Component {
    changLanguge = (lang) => {
       this.props.changeLangugeAppRedux(lang);
+   };
+
+   returnHome = () => {
+      console.log('sadasd');
+      if (this.props.history) {
+         this.props.history.push('/home');
+      }
    };
 
    render() {
@@ -19,7 +27,7 @@ class HomeHeader extends Component {
                   <div className="row">
                      <div className="left-content">
                         <i className="fas fa-bars"></i>
-                        <div className="header-logo"></div>
+                        <div className="header-logo" onClick={() => this.returnHome()}></div>
                      </div>
                      <div className="center-content">
                         <div className="child-content">
@@ -193,4 +201,4 @@ const mapDispatchToProps = (dispatch) => {
    return { changeLangugeAppRedux: (lang) => dispatch(changeLangugeApp(lang)) };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeHeader);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomeHeader));

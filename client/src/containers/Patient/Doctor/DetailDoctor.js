@@ -44,10 +44,8 @@ class DetailDoctor extends Component {
                <div className="intro-doctor row mb-3">
                   <div className="intro-doctor-left">
                      <div
+                        className="intro-doctor-image"
                         style={{
-                           borderRadius: '50%',
-                           width: '120px',
-                           height: '120px',
                            backgroundImage: `url(${detailDoctor.image ? detailDoctor.image : ''})`,
                         }}></div>
                   </div>
