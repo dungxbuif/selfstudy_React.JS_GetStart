@@ -8,7 +8,7 @@ import {
    getAllDoctors,
    postInfoDoctor,
 } from '../../services/userService';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 
 export const createNewUser = (data) => {
    return async (dispatch, getState) => {
@@ -128,7 +128,6 @@ export const fetchTopDoctors = () => {
                type: actionTypes.FETCH_TOP_DOCTORS_SUCCESS,
                dataDoctors: res.data,
             });
-            console.log('Get doctor succeeded!!');
          } else {
             dispatch({
                type: actionTypes.FETCH_TOP_DOCTORS_FAILED,
@@ -150,7 +149,7 @@ export const fetchALllDoctors = () => {
             });
             toast.success('Load all doctors succeed!!');
          } else {
-            dispatch({type: actionTypes.FETCH_All_DOCTORS_FAILED});
+            dispatch({ type: actionTypes.FETCH_All_DOCTORS_FAILED });
             toast.error('Load all users failed!!');
          }
       } catch (e) {
@@ -172,7 +171,7 @@ export const createDoctorInfo = (data) => {
             });
             toast.success('Create doctor info succeed!!');
          } else {
-            dispatch({type: actionTypes.CREATE_DOCTOR_INFO_FAILED});
+            dispatch({ type: actionTypes.CREATE_DOCTOR_INFO_FAILED });
             toast.error('Create doctor info failed!!');
          }
       } catch (e) {
