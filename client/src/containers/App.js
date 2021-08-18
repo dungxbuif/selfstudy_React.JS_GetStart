@@ -6,6 +6,7 @@ import { history } from '../redux';
 import { ToastContainer } from 'react-toastify';
 import HomePage from './HomePage/HomePage';
 import DetailDoctor from './Patient/Doctor/DetailDoctor';
+import Doctor from '../routes/Doctor';
 
 import { userIsAuthenticated, userIsNotAuthenticated } from '../hoc/authentication';
 
@@ -43,16 +44,17 @@ class App extends Component {
       return (
          <Fragment>
             <Router history={history}>
-               <div className="main-container">
+               <div className='main-container'>
                   {/* <ConfirmModal /> */}
                   {/* {this.props.isLoggedIn && <Header />} */}
 
-                  <div className="content-container">
+                  <div className='content-container'>
                      <CustomScrollbars style={{ height: '100vh', width: '100%' }}>
                         <Switch>
                            <Route path={path.HOME} exact component={Home} />
                            <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
                            <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
+                           <Route path={'/doctor/'} component={userIsAuthenticated(Doctor)} />
                            <Route path={path.HOME_PAGE} exact component={HomePage} />
                            <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
                         </Switch>
@@ -72,7 +74,7 @@ class App extends Component {
                      closeButton={<CustomToastCloseButton />}
                   /> */}
                   <ToastContainer
-                     position="bottom-right"
+                     position='bottom-right'
                      autoClose={5000}
                      hideProgressBar={false}
                      newestOnTop={false}
