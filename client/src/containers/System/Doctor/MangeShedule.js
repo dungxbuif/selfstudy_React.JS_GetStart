@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import './ManageSchedule.scss';
+import { FormattedMessage } from 'react-intl';
 class ManageSchedule extends Component {
    render() {
       const { isLoggedIn } = this.props;
       return (
-         <>
-            <div>MangeShedule</div>
-         </>
+         <div className="manage-schedule-container">
+            <div className="m-s-title">
+               <FormattedMessage id="manage-shedule.title" />
+            </div>
+         </div>
       );
    }
 }

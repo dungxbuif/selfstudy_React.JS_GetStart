@@ -55,5 +55,8 @@
         "image": "Ảnh",
         "cancelEdit": "Hủy chỉnh sửa",
         "saveEdit": "Lưu chỉnh sửa"
-    }   
+    },
+    "manage-shedule":{
+        "title": "Quản lý đặt lịch bác sỹ"
+    } 
 }
