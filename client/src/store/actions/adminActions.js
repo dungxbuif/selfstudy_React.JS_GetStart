@@ -7,6 +7,7 @@ import {
    getTopDoctorHomeService,
    getAllDoctors,
    postInfoDoctor,
+   getAllCodeService,
 } from '../../services/userService';
 import { toast } from 'react-toastify';
 
@@ -178,6 +179,28 @@ export const createDoctorInfo = (data) => {
          dispatch(fetchALllUsersFailed());
          console.log('fetchALllUsersFailed err', e);
          toast.error('Load all users failed!!');
+      }
+   };
+};
+
+export const fetchAllScheduleHours = () => {
+   return async (dispatch) => {
+      try {
+         let res = await getAllCodeService('TIME');
+         if (res && res.code === 0) {
+            dispatch({
+               type: actionTypes.FETCH_AllCODES_SCHEDULE_HOURS_SUCCESS,
+               dataTime: res.data,
+            });
+            toast.success('Load all time succeed!!');
+         } else {
+            dispatch({ type: actionTypes.FETCH_AllCODES_SCHEDULE_HOURS_FAILED });
+            toast.error('Load all time failed!!');
+         }
+      } catch (e) {
+         dispatch(fetchALllUsersFailed());
+         console.log('fetchAllScheduleHours err', e);
+         toast.error('Load all time failed!!');
       }
    };
 };

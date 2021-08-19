@@ -14,11 +14,13 @@ class ManageSchedule extends Component {
          selectedDoctor: '',
          listDoctors: [],
          currentDate: '',
+         rangeTime: [],
       };
    }
 
    componentDidMount() {
       this.props.fetchALllDoctors();
+      this.props.fetchAllScheduleHours();
    }
 
    componentDidUpdate(prevProps, prevStates, snapShot) {
@@ -76,6 +78,7 @@ class ManageSchedule extends Component {
    };
 
    render() {
+      console.log(this.props);
       return (
          <div className="manage-schedule-container">
             <div className="m-s-title my-3">
@@ -113,12 +116,14 @@ const mapStateToProps = (state) => {
    return {
       language: state.app.language,
       allDoctors: state.admin.allDoctors,
+      allScheduleTime: state.admin.allScheduleTime,
    };
 };
 
 const mapDispatchToProps = (dispatch) => {
    return {
       fetchALllDoctors: () => dispatch(actions.fetchALllDoctors()),
+      fetchAllScheduleHours: () => dispatch(actions.fetchAllScheduleHours()),
    };
 };
 

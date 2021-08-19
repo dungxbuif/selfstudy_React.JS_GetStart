@@ -2,6 +2,7 @@ const express = require('express');
 const homeController = require('../controllers/homeController');
 const userController = require('../controllers/userController');
 const doctorController = require('../controllers/doctorController');
+const allCodeController = require('../controllers/allCodeController');
 let router = express.Router();
 
 let initWebRoutes = (app) => {
@@ -25,6 +26,8 @@ let initWebRoutes = (app) => {
    router.get('/api/get-all-doctors', doctorController.getAllDoctors);
    router.post('/api/post-info-doctors', doctorController.postInfoDoctor);
    router.get('/api/get-detail-doctor-by-id', doctorController.getDetailDoctorByID);
+
+   router.get('/api/get-allcode-by-type', allCodeController.getAllCodeServices);
 
    return app.use('/', router);
 };

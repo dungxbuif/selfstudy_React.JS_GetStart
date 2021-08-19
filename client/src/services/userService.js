@@ -40,6 +40,10 @@ const getDoctorDetailInfo = (doctorID) => {
    return axios.get(`/api/get-detail-doctor-by-id?doctorID=${doctorID}`);
 };
 
+const getAllCodeService = (type) => {
+   return axios.get(`/api/get-allcode-by-type?type=${type}`);
+};
+
 export {
    handleLogin,
    getAllUsers,
@@ -51,4 +55,5 @@ export {
    getAllDoctors,
    postInfoDoctor,
    getDoctorDetailInfo,
+   getAllCodeService,
 };
