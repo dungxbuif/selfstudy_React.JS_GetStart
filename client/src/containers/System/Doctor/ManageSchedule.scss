@@ -1,5 +1,13 @@
 .manage-schedule-container {
    .m-s-title {
       text-transform: uppercase;
+      font-size: 17px;
+      font-weight: 600;
+      text-align: center;
+   }
+
+   .pick-hour-container {
+      height: 300px;
+      border: 1px solid salmon;
    }
 }
