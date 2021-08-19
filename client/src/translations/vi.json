@@ -57,6 +57,9 @@
         "saveEdit": "Lưu chỉnh sửa"
     },
     "manage-shedule":{
-        "title": "Quản lý đặt lịch bác sỹ"
+        "title": "Quản lý đặt lịch bác sỹ",
+        "choose-doctor": "Chọn bác sỹ",
+        "choose-date": "Chọn ngày",
+        "save": "Lưu thông tin"
     } 
 }

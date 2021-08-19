@@ -5,8 +5,10 @@ import * as actions from '../../../store/actions';
 import Select from 'react-select';
 import { getDoctorDetailInfo } from '../../../services/userService';
 import { FormattedMessage } from 'react-intl';
-import { LANGUAGES } from '../../../utils';
+import { LANGUAGES, dateFormat } from '../../../utils';
 import DatePicker from '../../../components/Input/DatePicker';
+import { toast } from 'react-toastify';
+import moment from 'moment';
 class ManageSchedule extends Component {
    constructor(props) {
       super(props);
@@ -29,6 +31,17 @@ class ManageSchedule extends Component {
       }
       if (prevProps.language !== this.props.language) {
          this.convertDataToSelect();
+      }
+      if (prevProps.allScheduleTime !== this.props.allScheduleTime) {
+         let data = this.props.allScheduleTime;
+         if (data && data.length) {
+            data.forEach((item) => {
+               item.isSelected = false;
+            });
+         }
+         this.setState({
+            rangeTime: this.props.allScheduleTime,
+         });
       }
    }
 
@@ -77,8 +90,36 @@ class ManageSchedule extends Component {
       });
    };
 
+   handleButtonTime = (index) => {
+      let tmp = this.state.rangeTime;
+      tmp[index].isSelected = !tmp[index].isSelected;
+      this.setState({
+         rangeTime: tmp,
+      });
+   };
+
+   handleSave = () => {
+      let { rangeTime, selectedDoctor, currentDate } = this.state;
+      if (!selectedDoctor) {
+         toast.error('Please select a doctor');
+         return;
+      }
+
+      if (!currentDate) {
+         toast.error('Please choose a day');
+         return;
+      }
+      currentDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER);
+
+      if (rangeTime && rangeTime.length) {
+         let selectedTime = rangeTime.filter((item) => item.isSelected);
+         console.log(selectedTime);
+      }
+   };
+
    render() {
-      console.log(this.props);
+      let { rangeTime } = this.state;
+      let { language } = this.props;
       return (
          <div className="manage-schedule-container">
             <div className="m-s-title my-3">
@@ -87,7 +128,9 @@ class ManageSchedule extends Component {
             <div className="container">
                <div className="row">
                   <div className="col-6 form-group">
-                     <label>Chọn bác sỹ</label>
+                     <label>
+                        <FormattedMessage id="manage-shedule.choose-doctor" />
+                     </label>
                      <Select
                         value={this.state.selectedDoctor}
                         onChange={this.handleChange}
@@ -95,16 +138,33 @@ class ManageSchedule extends Component {
                      />
                   </div>
                   <div className="col-6 form-group">
-                     <label>Chọn ngày</label>
+                     <label>
+                        <FormattedMessage id="manage-shedule.choose-date" />
+                     </label>
                      <DatePicker
                         className="form-control"
-                        onChange={this.handleOnChangeDatePicker}
+                        onChange={(date) => this.handleOnChangeDatePicker(date)}
                         selected={this.state.currentDate}
                         minDate={new Date()}
                      />
                   </div>
-                  <div className="col-12 pick-hour-container"></div>
-                  <button className="btn btn-primary mt-3">Lưu thông tin</button>
+                  <div className="col-12 pick-hour-container y-3">
+                     {rangeTime &&
+                        rangeTime.length &&
+                        rangeTime.map((item, index) => (
+                           <button
+                              className={item.isSelected ? 'btn btn-warning' : 'btn btn-nomarl'}
+                              onClick={() => this.handleButtonTime(index)}
+                              key={index}>
+                              {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
+                           </button>
+                        ))}
+                  </div>
+                  <div className="col-12">
+                     <button className="btn btn-primary mt-3" onClick={() => this.handleSave()}>
+                        <FormattedMessage id="manage-shedule.save" />
+                     </button>
+                  </div>
                </div>
             </div>
          </div>

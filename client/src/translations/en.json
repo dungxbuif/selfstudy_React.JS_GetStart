@@ -55,5 +55,11 @@
         "image": "Image",
         "cancelEdit": "Cancel edit",
         "saveEdit": "Save edit"
-    }   
+    },
+    "manage-shedule":{
+        "title": "Manage Doctor's schedule",
+        "choose-doctor": "Choose doctor",
+        "choose-date": "Choose date",
+        "save": "Save"
+    } 
 }
