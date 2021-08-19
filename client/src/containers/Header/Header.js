@@ -25,7 +25,6 @@ class Header extends Component {
    componentDidMount() {
       let { userInfo } = this.props;
       let menu = [];
-      console.log(userInfo);
       if (userInfo && !_.isEmpty(userInfo)) {
          let role = userInfo.roleId;
          if (role === USER_ROLE.ADMIN) {
@@ -42,15 +41,15 @@ class Header extends Component {
    render() {
       const { processLogout, language, userInfo } = this.props;
       return (
-         <div className='header-container'>
+         <div className="header-container">
             {/* thanh navigator */}
-            <div className='header-tabs-container'>
+            <div className="header-tabs-container">
                <Navigator menus={this.state.menuApp} />
             </div>
             {/* nút logout */}
-            <div className='languages'>
-               <span className='welcome'>
-                  <FormattedMessage id='home-header.welcome' />
+            <div className="languages">
+               <span className="welcome">
+                  <FormattedMessage id="home-header.welcome" />
                   {userInfo && userInfo.username ? userInfo.username : ''}
                </span>
                <span
@@ -66,8 +65,8 @@ class Header extends Component {
                   EN
                </span>
 
-               <div className='btn btn-logout' onClick={processLogout} title='Log out'>
-                  <i className='fas fa-sign-out-alt'></i>
+               <div className="btn btn-logout" onClick={processLogout} title="Log out">
+                  <i className="fas fa-sign-out-alt"></i>
                </div>
             </div>
          </div>

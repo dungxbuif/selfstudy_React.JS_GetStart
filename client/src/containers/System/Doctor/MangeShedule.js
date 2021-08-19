@@ -6,18 +6,14 @@ import Select from 'react-select';
 import { getDoctorDetailInfo } from '../../../services/userService';
 import { FormattedMessage } from 'react-intl';
 import { LANGUAGES } from '../../../utils';
-import DatePiker from '../../../components/Input/DatePicker';
+import DatePicker from '../../../components/Input/DatePicker';
 class ManageSchedule extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         contentMarkdown: '',
-         contentHTML: '',
          selectedDoctor: '',
-         description: '',
-         hasExisted: false,
-         allDoctors: [],
          listDoctors: [],
+         currentDate: '',
       };
    }
 
@@ -73,6 +69,12 @@ class ManageSchedule extends Component {
       console.log(res);
    };
 
+   handleOnChangeDatePicker = (date) => {
+      this.setState({
+         currentDate: date[0],
+      });
+   };
+
    render() {
       return (
          <div className="manage-schedule-container">
@@ -91,7 +93,12 @@ class ManageSchedule extends Component {
                   </div>
                   <div className="col-6 form-group">
                      <label>Chọn ngày</label>
-                     import {(LANGUAGES, CRUD_ACTIONS)} from '../../../utils';
+                     <DatePicker
+                        className="form-control"
+                        onChange={this.handleOnChangeDatePicker}
+                        selected={this.state.currentDate}
+                        minDate={new Date()}
+                     />
                   </div>
                   <div className="col-12 pick-hour-container"></div>
                   <button className="btn btn-primary mt-3">Lưu thông tin</button>
