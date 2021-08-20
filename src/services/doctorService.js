@@ -147,15 +147,14 @@ const bulkCreateSchedule = async (dataReq) => {
             });
             return;
          }
-
          let schedlude = dataReq.arrData;
          if (schedlude && schedlude.length) {
             schedlude.forEach((item) => {
                item.maxNumber = MAX_NUMBER_SCHEDULE;
             });
-
-            let existing = await db.Shedule.findAll({
-               where: { doctorID: +dataReq.arrData[0].doctorId, date: dataReq.arrData[0].date },
+            console.log(dataReq.arrData[0].date);
+            let existing = await db.Schedule.findAll({
+               where: { doctorId: +dataReq.arrData[0].doctorId, date: dataReq.arrData[0].date },
                attributes: ['timeType', 'date', 'doctorId', 'maxNumber'],
                raw: true,
             });
@@ -172,7 +171,7 @@ const bulkCreateSchedule = async (dataReq) => {
             });
 
             if (toCreate && toCreate.length) {
-               const data = await db.Shedule.bulkCreate(toCreate);
+               const data = await db.Schedule.bulkCreate(toCreate);
                resolve({
                   code: 0,
                   message: 'Succeed',
@@ -186,10 +185,41 @@ const bulkCreateSchedule = async (dataReq) => {
    });
 };
 
+const getScheduleDoctorByDate = async (doctorId, date) => {
+   return new Promise(async (resolve, reject) => {
+      try {
+         if (!doctorId || !date)
+            resolve({
+               code: -1,
+               message: 'Missing required prameters',
+            });
+
+         const data = await db.Schedule.findAll({
+            where: { doctorId, date: new Date(date).getTime() },
+            raw: false,
+         });
+
+         if (data && data.image) {
+            data.image = new Buffer(data.image, 'base64').toString('binary');
+         }
+
+         if (!data) data = [];
+
+         resolve({
+            code: 0,
+            data,
+         });
+      } catch (e) {
+         reject(e);
+      }
+   });
+};
+
 module.exports = {
    getTopDoctorHome,
    getAllDoctors,
    saveInfoDoctor,
    getDetailDoctorByID,
    bulkCreateSchedule,
+   getScheduleDoctorByDate,
 };

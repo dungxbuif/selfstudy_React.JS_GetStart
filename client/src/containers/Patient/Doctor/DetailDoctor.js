@@ -4,7 +4,7 @@ import HomeHeader from '../../HomePage/HomeHeader';
 import './DetailDoctor.scss';
 import { getDoctorDetailInfo } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils/constant';
-
+import DoctorSchedule from './DoctorSchedule.js';
 class DetailDoctor extends Component {
    constructor(props) {
       super(props);
@@ -58,7 +58,12 @@ class DetailDoctor extends Component {
                      </div>
                   </div>
                </div>
-               <div className="doctor-schedule row"></div>
+               <div className="doctor-schedule row">
+                  <div className="content-left w-50">
+                     <DoctorSchedule doctorId={detailDoctor.id} />
+                  </div>
+                  <div className="content-right w-50"></div>
+               </div>
                <div className="doctor-info-detail row">
                   {detailDoctor.markDownData && detailDoctor.markDownData.contentHTML && (
                      <div
