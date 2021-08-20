@@ -1,4 +1,6 @@
 const db = require('../models/index');
+require('dotenv').config();
+const MAX_NUMBER_SCHEDULE = +process.env.MAX_NUMBER_SCHEDULE;
 
 const getTopDoctorHome = async (limit) => {
    return new Promise(async (resolve, reject) => {
@@ -134,9 +136,48 @@ const getDetailDoctorByID = async (doctorID) => {
    });
 };
 
+bulkCreateSchedule = async (dataReq) => {
+   return new Promise(async (resolve, reject) => {
+      try {
+         if (!dataReq.arrData || !dataReq.arrData.length) {
+            resolve({
+               code: -1,
+               message: 'Missing required prameters',
+            });
+            return;
+         }
+
+         const data = await db.User.findOne({
+            where: { id: doctorID },
+            attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'gender'] },
+            include: {
+               model: db.Markdown,
+               as: 'markDownData',
+            },
+            raw: false,
+            nest: true,
+         });
+
+         if (data && data.image) {
+            data.image = new Buffer(data.image, 'base64').toString('binary');
+         }
+
+         if (!data) data = {};
+
+         resolve({
+            code: 0,
+            // data,
+         });
+      } catch (e) {
+         reject(e);
+      }
+   });
+};
+
 module.exports = {
    getTopDoctorHome,
    getAllDoctors,
    saveInfoDoctor,
    getDetailDoctorByID,
+   bulkCreateSchedule,
 };

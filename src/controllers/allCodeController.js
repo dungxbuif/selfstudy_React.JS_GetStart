@@ -12,7 +12,7 @@ const getAllCodeServices = async (req, res, next) => {
    try {
       const data = await db.Allcodes.findAll({
          where: { type },
-         attributes: ['valueVi', 'valueEn'],
+         attributes: ['valueVi', 'valueEn', 'keyMap'],
       });
 
       return res.status(200).json({

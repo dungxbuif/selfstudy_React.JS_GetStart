@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import './ManageSchedule.scss';
 import * as actions from '../../../store/actions';
 import Select from 'react-select';
-import { getDoctorDetailInfo } from '../../../services/userService';
+import { getDoctorDetailInfo, saveBulkDchedule } from '../../../services/userService';
 import { FormattedMessage } from 'react-intl';
 import { LANGUAGES, dateFormat } from '../../../utils';
 import DatePicker from '../../../components/Input/DatePicker';
@@ -98,7 +98,7 @@ class ManageSchedule extends Component {
       });
    };
 
-   handleSave = () => {
+   handleSave = async () => {
       let { rangeTime, selectedDoctor, currentDate } = this.state;
       if (!selectedDoctor) {
          toast.error('Please select a doctor');
@@ -113,8 +113,19 @@ class ManageSchedule extends Component {
 
       if (rangeTime && rangeTime.length) {
          let selectedTime = rangeTime.filter((item) => item.isSelected);
-         console.log(selectedTime);
+         if (!selectedTime.length) {
+            toast.error('Please choose at least one time');
+            return;
+         }
+
+         var result = selectedTime.map((item) => ({
+            doctorId: selectedDoctor.value,
+            date: currentDate,
+            time: item.keyMap,
+         }));
       }
+
+      let res = await saveBulkDchedule(result);
    };
 
    render() {
