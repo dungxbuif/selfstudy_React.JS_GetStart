@@ -1,4 +1,5 @@
 const db = require('../models/index');
+const _ = require('lodash');
 require('dotenv').config();
 const MAX_NUMBER_SCHEDULE = +process.env.MAX_NUMBER_SCHEDULE;
 
@@ -136,7 +137,7 @@ const getDetailDoctorByID = async (doctorID) => {
    });
 };
 
-bulkCreateSchedule = async (dataReq) => {
+const bulkCreateSchedule = async (dataReq) => {
    return new Promise(async (resolve, reject) => {
       try {
          if (!dataReq.arrData || !dataReq.arrData.length) {
@@ -147,27 +148,38 @@ bulkCreateSchedule = async (dataReq) => {
             return;
          }
 
-         const data = await db.User.findOne({
-            where: { id: doctorID },
-            attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'gender'] },
-            include: {
-               model: db.Markdown,
-               as: 'markDownData',
-            },
-            raw: false,
-            nest: true,
-         });
+         let schedlude = dataReq.arrData;
+         if (schedlude && schedlude.length) {
+            schedlude.forEach((item) => {
+               item.maxNumber = MAX_NUMBER_SCHEDULE;
+            });
 
-         if (data && data.image) {
-            data.image = new Buffer(data.image, 'base64').toString('binary');
+            let existing = await db.Shedule.findAll({
+               where: { doctorID: +dataReq.arrData[0].doctorId, date: dataReq.arrData[0].date },
+               attributes: ['timeType', 'date', 'doctorId', 'maxNumber'],
+               raw: true,
+            });
+
+            if (existing && existing.length > 0) {
+               existing = existing.map((item) => {
+                  item.date = new Date(item.date).getTime();
+                  return item;
+               });
+            }
+
+            let toCreate = _.differenceWith(schedlude, existing, (a, b) => {
+               return a.timeType === b.timeType && a.date === b.date;
+            });
+
+            if (toCreate && toCreate.length) {
+               const data = await db.Shedule.bulkCreate(toCreate);
+               resolve({
+                  code: 0,
+                  message: 'Succeed',
+                  data,
+               });
+            }
          }
-
-         if (!data) data = {};
-
-         resolve({
-            code: 0,
-            // data,
-         });
       } catch (e) {
          reject(e);
       }

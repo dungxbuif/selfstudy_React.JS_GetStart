@@ -8,7 +8,7 @@ import { FormattedMessage } from 'react-intl';
 import { LANGUAGES, dateFormat } from '../../../utils';
 import DatePicker from '../../../components/Input/DatePicker';
 import { toast } from 'react-toastify';
-import moment from 'moment';
+import moment, { unix } from 'moment';
 class ManageSchedule extends Component {
    constructor(props) {
       super(props);
@@ -88,6 +88,7 @@ class ManageSchedule extends Component {
       this.setState({
          currentDate: date[0],
       });
+      console.log(date);
    };
 
    handleButtonTime = (index) => {
@@ -109,7 +110,7 @@ class ManageSchedule extends Component {
          toast.error('Please choose a day');
          return;
       }
-      currentDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER);
+      // currentDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER);
 
       if (rangeTime && rangeTime.length) {
          let selectedTime = rangeTime.filter((item) => item.isSelected);
@@ -120,8 +121,8 @@ class ManageSchedule extends Component {
 
          var result = selectedTime.map((item) => ({
             doctorId: selectedDoctor.value,
-            date: currentDate,
-            time: item.keyMap,
+            date: new Date(currentDate).getTime(),
+            timeType: item.keyMap,
          }));
       }
 
