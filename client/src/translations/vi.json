@@ -61,5 +61,10 @@
         "choose-doctor": "Chọn bác sỹ",
         "choose-date": "Chọn ngày",
         "save": "Lưu thông tin"
-    } 
+    },
+    "patient": {
+        "detail-doctor": {
+            "schesule": "Lịch khám bệnh"
+        }
+    }
 }

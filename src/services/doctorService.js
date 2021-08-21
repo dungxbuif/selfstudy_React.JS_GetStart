@@ -113,10 +113,17 @@ const getDetailDoctorByID = async (doctorID) => {
          const data = await db.User.findOne({
             where: { id: doctorID },
             attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'gender'] },
-            include: {
-               model: db.Markdown,
-               as: 'markDownData',
-            },
+            include: [
+               {
+                  model: db.Markdown,
+                  as: 'markDownData',
+               },
+               {
+                  model: db.Allcodes,
+                  as: 'positionData',
+                  attributes: ['valueVi', 'valueEn'],
+               },
+            ],
             raw: false,
             nest: true,
          });

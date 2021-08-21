@@ -5,6 +5,7 @@ import moment from 'moment';
 import localization from 'moment/locale/vi';
 import { getScheduleDoctorByDate } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils';
+import { FormattedMessage } from 'react-intl';
 
 class DoctorSchedule extends Component {
    constructor(props) {
@@ -31,8 +32,9 @@ class DoctorSchedule extends Component {
       let arrDate = [];
       for (let i = 0; i < 7; i++) {
          let obj = {};
+         let isLangVi = this.props.language === LANGUAGES.VI;
 
-         if (this.props.language === LANGUAGES.VI) {
+         if (isLangVi) {
             obj.label = moment(new Date()).add(i, 'days').format('dddd - DD/MM');
             obj.label = obj.label.charAt(0).toUpperCase() + obj.label.slice(1);
          } else {
@@ -42,9 +44,13 @@ class DoctorSchedule extends Component {
          obj.value = moment(new Date()).add(i, 'days').startOf('day').valueOf();
 
          if (i === 0) {
-            this.setState({
-               selectedCalendar: obj.value,
-            });
+            let WEEKEND_DAY = obj.label.split(' -')[0];
+            obj.label = obj.label.replace(WEEKEND_DAY, isLangVi ? 'Hôm nay' : 'Today');
+         }
+
+         if (i === 1) {
+            let WEEKEND_DAY = obj.label.split(' -')[0];
+            obj.label = obj.label.replace(WEEKEND_DAY, isLangVi ? 'Ngày Mai' : 'Tomorrow');
          }
 
          arrDate.push(obj);
@@ -90,8 +96,9 @@ class DoctorSchedule extends Component {
             </div>
             <div className="all-available-time">
                <div className="calendar my-1">
-                  <span>
-                     <i className="fas fa-calendar-alt"></i> Lịch khám bệnh
+                  <span className="text-uppercase">
+                     <i className="fas fa-calendar-alt"></i>{' '}
+                     <FormattedMessage id="patient.detail-doctor.schesule" />
                   </span>
                </div>
                <div className="time-content py-1">
@@ -100,8 +107,8 @@ class DoctorSchedule extends Component {
                           <button
                              className={
                                 language === LANGUAGES.VI
-                                   ? 'btn btn-calendar mb-1'
-                                   : 'btn btn-calendar en-width mb-1'
+                                   ? 'btn btn-calendar mb-1 py-2'
+                                   : 'btn btn-calendar mb-1 py-2 en-width'
                              }
                              key={item.id}>
                              {language === LANGUAGES.VI

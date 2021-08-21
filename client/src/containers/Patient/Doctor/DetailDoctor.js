@@ -22,12 +22,14 @@ class DetailDoctor extends Component {
             this.setState({
                detailDoctor: res.data,
             });
+            console.log(res.data);
          }
       }
    }
 
    render() {
       let detailDoctor = this.state.detailDoctor;
+      console.log(detailDoctor);
       let language = this.props.language;
       let nameVi = '',
          nameEn = '';
@@ -39,37 +41,46 @@ class DetailDoctor extends Component {
       return (
          <>
             <HomeHeader isShowBanner={false} />
-            <div className="doctor-detail-container container">
-               <div className="intro-doctor row mb-3">
-                  <div className="intro-doctor-left">
-                     <div
-                        className="intro-doctor-image"
-                        style={{
-                           backgroundImage: `url(${detailDoctor.image ? detailDoctor.image : ''})`,
-                        }}></div>
-                  </div>
-                  <div className="intro-doctor-right">
-                     <div className="info-top">{language === LANGUAGES.VI ? nameVi : nameEn}</div>
-                     <div className="info-bottom">
-                        {detailDoctor.markDownData && detailDoctor.markDownData.description && (
-                           <span>{detailDoctor.markDownData.description}</span>
-                        )}
+            <div className="doctor-detail-container">
+               <div className="container">
+                  <div className="intro-doctor d-flex mb-3">
+                     <div className="intro-doctor-left">
+                        <div
+                           className="intro-doctor-image"
+                           style={{
+                              backgroundImage: `url(${
+                                 detailDoctor.image ? detailDoctor.image : ''
+                              })`,
+                           }}></div>
+                     </div>
+                     <div className="intro-doctor-right">
+                        <div className="info-top">
+                           {language === LANGUAGES.VI ? nameVi : nameEn}
+                        </div>
+                        <div className="info-bottom">
+                           {detailDoctor.markDownData && detailDoctor.markDownData.description && (
+                              <span>{detailDoctor.markDownData.description}</span>
+                           )}
+                        </div>
                      </div>
                   </div>
-               </div>
-               <div className="doctor-schedule row">
-                  <div className="content-left w-50">
-                     <DoctorSchedule doctorId={detailDoctor.id} />
+                  <div className="doctor-schedule d-flex">
+                     <div className="content-left w-50 py-2">
+                        <DoctorSchedule doctorId={detailDoctor.id} />
+                     </div>
+                     <div className="content-right w-50"></div>
                   </div>
-                  <div className="content-right w-50"></div>
                </div>
-               <div className="doctor-info-detail row">
-                  {detailDoctor.markDownData && detailDoctor.markDownData.contentHTML && (
-                     <div
-                        dangerouslySetInnerHTML={{
-                           __html: detailDoctor.markDownData.contentHTML,
-                        }}></div>
-                  )}
+
+               <div className="doctor-info-detail">
+                  <div className="container">
+                     {detailDoctor.markDownData && detailDoctor.markDownData.contentHTML && (
+                        <div
+                           dangerouslySetInnerHTML={{
+                              __html: detailDoctor.markDownData.contentHTML,
+                           }}></div>
+                     )}
+                  </div>
                </div>
                <div className="comment row"></div>
             </div>

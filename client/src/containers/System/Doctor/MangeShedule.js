@@ -67,20 +67,11 @@ class ManageSchedule extends Component {
       this.setState({ selectedDoctor });
 
       let res = await getDoctorDetailInfo(selectedDoctor.value);
-      // if (res && res.code === 0 && res.data && res.data.markDownData) {
-      //    let markdown = res.data.markDownData;
-      //    this.setState({
-      //       contentMarkdown: markdown.contentMarkdown,
-      //       description: markdown.description,
-      //       hasExisted: true,
-      //    });
-      // } else {
-      //    this.setState({
-      //       contentMarkdown: '',
-      //       description: '',
-      //       hasExisted: false,
-      //    });
-      // }
+      if (res.code === 0) {
+         toast.success('Schedule succeed');
+      } else {
+         toast.error('Schedule failed');
+      }
       console.log(res);
    };
 
@@ -132,6 +123,7 @@ class ManageSchedule extends Component {
    render() {
       let { rangeTime } = this.state;
       let { language } = this.props;
+      let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
       return (
          <div className="manage-schedule-container">
             <div className="m-s-title my-3">
@@ -157,7 +149,7 @@ class ManageSchedule extends Component {
                         className="form-control"
                         onChange={(date) => this.handleOnChangeDatePicker(date)}
                         selected={this.state.currentDate}
-                        minDate={new Date()}
+                        minDate={yesterday}
                      />
                   </div>
                   <div className="col-12 pick-hour-container y-3">

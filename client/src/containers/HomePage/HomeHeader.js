@@ -24,7 +24,7 @@ class HomeHeader extends Component {
          <>
             <div className="home-header-container">
                <div className="home-header-content container ">
-                  <div className="row">
+                  <div className="d-flex w-75">
                      <div className="left-content">
                         <i className="fas fa-bars"></i>
                         <div className="header-logo" onClick={() => this.returnHome()}></div>
@@ -76,7 +76,7 @@ class HomeHeader extends Component {
                      </div>
                   </div>
                   <div className="right-content">
-                     <div className="row align-items-center">
+                     <div className="d-flex align-items-center">
                         <i className="fas fa-question-circle"></i>
                         <span>Hỗ trợ</span>
                         <span
