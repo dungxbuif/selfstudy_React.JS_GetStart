@@ -66,5 +66,14 @@
         "detail-doctor": {
             "schesule": "Medical examination schedule"
         }
+    },
+    "admin": {
+        "manage-doctor": {
+            "title" : "Create Doctors' informations",
+            "choose-doctor": "Choose doctors",
+            "doctor-info": "Doctors' information",
+            "add": "Add new doctor",
+            "save": "Save doctor"
+        }
     }
 }

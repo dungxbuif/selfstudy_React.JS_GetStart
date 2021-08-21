@@ -5,6 +5,7 @@ const initialState = {
    topDoctors: [],
    allDoctors: [],
    allScheduleTime: [],
+   dataDoctorRequired: {},
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -47,6 +48,16 @@ const adminReducer = (state = initialState, action) => {
          };
       case actionTypes.FETCH_AllCODES_SCHEDULE_HOURS_FAILED:
          state.allScheduleTime = [];
+         return {
+            ...state,
+         };
+      case actionTypes.GET_DOCTOR_ALL_CODE_SUCCEED:
+         state.dataDoctorRequired = action.dataDoctorRequired;
+         return {
+            ...state,
+         };
+      case actionTypes.GET_DOCTOR_ALL_CODE_FAILED:
+         state.dataDoctorRequired = {};
          return {
             ...state,
          };

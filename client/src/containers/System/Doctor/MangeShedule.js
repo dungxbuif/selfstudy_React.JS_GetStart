@@ -5,10 +5,9 @@ import * as actions from '../../../store/actions';
 import Select from 'react-select';
 import { getDoctorDetailInfo, saveBulkDchedule } from '../../../services/userService';
 import { FormattedMessage } from 'react-intl';
-import { LANGUAGES, dateFormat } from '../../../utils';
+import { LANGUAGES } from '../../../utils';
 import DatePicker from '../../../components/Input/DatePicker';
 import { toast } from 'react-toastify';
-import moment, { unix } from 'moment';
 class ManageSchedule extends Component {
    constructor(props) {
       super(props);
@@ -117,7 +116,7 @@ class ManageSchedule extends Component {
          }));
       }
 
-      let res = await saveBulkDchedule(result);
+      await saveBulkDchedule(result);
    };
 
    render() {

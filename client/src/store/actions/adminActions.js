@@ -204,3 +204,34 @@ export const fetchAllScheduleHours = () => {
       }
    };
 };
+
+export const getDoctorAllCodes = () => {
+   return async (dispatch) => {
+      try {
+         let [res, res2, res3] = await Promise.all([
+            getAllCodeService('PRICE'),
+            getAllCodeService('PAYMENT'),
+            getAllCodeService('PROVINCE'),
+         ]);
+         console.log([res, res2, res3]);
+         if (res.code === 0 && res3.code === 0 && res2.code === 0) {
+            dispatch({
+               type: actionTypes.GET_DOCTOR_ALL_CODE_SUCCEED,
+               dataDoctorRequired: {
+                  listPrice: res.data,
+                  listPayment: res2.data,
+                  listProvine: res3.data,
+               },
+            });
+            toast.success('Get all doctor code succeed!!');
+         } else {
+            dispatch({ type: actionTypes.GET_DOCTOR_ALL_CODE_FAILED });
+            toast.error('Load all doctor code failed!!');
+         }
+      } catch (e) {
+         dispatch({ type: actionTypes.GET_DOCTOR_ALL_CODE_FAILED });
+         console.log('getDoctorAllCode err', e);
+         toast.error('Load all doctor code failed!!');
+      }
+   };
+};

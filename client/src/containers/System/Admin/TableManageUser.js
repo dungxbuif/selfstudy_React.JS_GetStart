@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
-import {FormattedMessage} from 'react-intl';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import 'react-image-lightbox/style.css';
 import * as actions from '../../../store/actions';
 import MarkdownIt from 'markdown-it';
@@ -9,7 +8,7 @@ import 'react-markdown-editor-lite/lib/index.css';
 
 const mdParser = new MarkdownIt();
 
-function handleEditorChange({html, text}) {
+function handleEditorChange({ html, text }) {
    console.log('handleEditorChange', html, text);
 }
 class TableManageUser extends Component {
@@ -96,7 +95,7 @@ class TableManageUser extends Component {
                </tbody>
             </table>
             <MdEditor
-               style={{height: '500px', width: '100%'}}
+               style={{ height: '500px', width: '100%' }}
                renderHTML={(text) => mdParser.render(text)}
                onChange={handleEditorChange}
             />
@@ -106,7 +105,7 @@ class TableManageUser extends Component {
 }
 
 const mapStateToProps = (state) => {
-   return {listUsers: state.admin.users};
+   return { listUsers: state.admin.users };
 };
 
 const mapDispatchToProps = (dispatch) => {

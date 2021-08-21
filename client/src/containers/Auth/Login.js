@@ -4,8 +4,6 @@ import { push } from 'connected-react-router';
 // import * as actions from "../store/actions";
 import * as actions from '../../store/actions';
 import './Login.scss';
-import { FormattedMessage } from 'react-intl';
-import { HighlightSpanKind } from 'typescript';
 import { userService } from '../../services/';
 
 class Login extends Component {
@@ -36,17 +34,15 @@ class Login extends Component {
          errMessage: '',
       });
       try {
-         await userService
-            .handleLogin(this.state.username, this.state.password)
-            .then((res) => {
-               if (res.code !== 0) {
-                  this.setState({
-                     errMessage: res.message,
-                  });
-                  return;
-               }
-               this.props.userLoginSuccess(res.data);
-            });
+         await userService.handleLogin(this.state.username, this.state.password).then((res) => {
+            if (res.code !== 0) {
+               this.setState({
+                  errMessage: res.message,
+               });
+               return;
+            }
+            this.props.userLoginSuccess(res.data);
+         });
       } catch (e) {
          this.setState({
             errMessage: e.response.data.message,
@@ -88,15 +84,11 @@ class Login extends Component {
                         <span
                            onClick={() => {
                               this.handleShowHidePass();
-                           }}
-                        >
+                           }}>
                            <i
                               className={
-                                 this.state.isShowPass
-                                    ? 'far fa-eye-slash'
-                                    : 'far fa-eye'
-                              }
-                           ></i>
+                                 this.state.isShowPass ? 'far fa-eye-slash' : 'far fa-eye'
+                              }></i>
                         </span>
                      </div>
                   </div>
@@ -108,8 +100,7 @@ class Login extends Component {
                         className="btn-login"
                         onClick={() => {
                            this.handleLogin();
-                        }}
-                     >
+                        }}>
                         Login
                      </button>
                   </div>
@@ -140,8 +131,7 @@ const mapDispatchToProps = (dispatch) => {
    return {
       navigate: (path) => dispatch(push(path)),
       userLoginFail: () => dispatch(actions.userLoginFail()),
-      userLoginSuccess: (userInfor) =>
-         dispatch(actions.userLoginSuccess(userInfor)),
+      userLoginSuccess: (userInfor) => dispatch(actions.userLoginSuccess(userInfor)),
    };
 };
 

@@ -66,5 +66,14 @@
         "detail-doctor": {
             "schesule": "Lịch khám bệnh"
         }
+    },
+    "admin": {
+        "manage-doctor": {
+            "title" : "Tạo thông tin doctors",
+            "choose-doctor": "Chọn bác sỹ",
+            "doctor-info": "Thông tin bác sỹ",
+            "add": "Thêm mới bác sỹ",
+            "save": "Lưu bác sỹ"
+        }
     }
 }
