@@ -196,6 +196,12 @@ const getScheduleDoctorByDate = async (doctorId, date) => {
 
          const data = await db.Schedule.findAll({
             where: { doctorId, date: new Date(date).getTime() },
+            include: {
+               model: db.Allcodes,
+               as: 'scheduleData',
+               attributes: ['valueVi', 'valueEn'],
+            },
+
             raw: false,
          });
 

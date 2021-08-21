@@ -1,0 +1,36 @@
+.doctor-schedule-container {
+   min-height: 200px;
+
+   .all-schedule {
+      select {
+         border: none;
+         border-bottom: 2px solid #45c3da;
+         padding: 0.4rem;
+         outline: none;
+         color: #49bce2;
+      }
+   }
+   .all-available-time {
+      .time-content {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 0.5rem;
+
+         .btn-calendar {
+            background-color: #fff04b;
+            color: #333;
+            min-width: 120px;
+            font-weight: 600;
+
+            &:hover {
+               background-color: #45c3da;
+               color: white;
+            }
+         }
+
+         .en-width {
+            min-width: 153px;
+         }
+      }
+   }
+}

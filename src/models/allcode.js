@@ -1,5 +1,5 @@
 'use strict';
-const {Model} = require('sequelize');
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
    class Allcodes extends Model {
@@ -8,9 +8,15 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'positionId',
             as: 'positionData',
          });
+
          Allcodes.hasMany(models.User, {
             foreignKey: 'gender',
             as: 'genderData',
+         });
+
+         Allcodes.hasMany(models.Schedule, {
+            foreignKey: 'timeType',
+            as: 'scheduleData',
          });
       }
    }

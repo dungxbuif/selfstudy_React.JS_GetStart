@@ -11,11 +11,20 @@ class DoctorSchedule extends Component {
       super(props);
       this.state = {
          allDays: [],
+         allCalendar: [],
       };
    }
 
    componentDidMount() {
       this.setSelectTime();
+   }
+
+   async setAllCalendar(date) {
+      let doctorId = this.props.doctorId;
+      let res = await getScheduleDoctorByDate(doctorId, date);
+      this.setState({
+         allCalendar: res.data,
+      });
    }
 
    setSelectTime() {
@@ -32,6 +41,12 @@ class DoctorSchedule extends Component {
 
          obj.value = moment(new Date()).add(i, 'days').startOf('day').valueOf();
 
+         if (i === 0) {
+            this.setState({
+               selectedCalendar: obj.value,
+            });
+         }
+
          arrDate.push(obj);
       }
 
@@ -44,20 +59,23 @@ class DoctorSchedule extends Component {
       if (this.props.language !== prevProprs.language) {
          this.setSelectTime();
       }
+      if (prevProprs.doctorId !== this.props.doctorId) {
+         let date = moment().startOf('day').valueOf();
+         this.setAllCalendar(date);
+      }
    }
 
-   async handleOnChangeSelect(event) {
-      let doctorId = this.props.doctorId;
+   handleOnChangeSelect(event) {
       let date = event.target.value;
-      let res = await getScheduleDoctorByDate(doctorId, date);
-      console.log(res);
+      this.setAllCalendar(date);
    }
 
    render() {
-      let { allDays } = this.state;
+      let { allDays, allCalendar } = this.state;
+      let { language } = this.props;
       return (
          <div className="doctor-schedule-container">
-            <div className="all-schedule">
+            <div className="all-schedule mb-3">
                <select
                   className="form-select"
                   onChange={(event) => this.handleOnChangeSelect(event)}>
@@ -70,7 +88,30 @@ class DoctorSchedule extends Component {
                      ))}
                </select>
             </div>
-            <div className="all-available-time"></div>
+            <div className="all-available-time">
+               <div className="calendar my-1">
+                  <span>
+                     <i className="fas fa-calendar-alt"></i> Lịch khám bệnh
+                  </span>
+               </div>
+               <div className="time-content py-1">
+                  {allCalendar && allCalendar.length
+                     ? allCalendar.map((item) => (
+                          <button
+                             className={
+                                language === LANGUAGES.VI
+                                   ? 'btn btn-calendar mb-1'
+                                   : 'btn btn-calendar en-width mb-1'
+                             }
+                             key={item.id}>
+                             {language === LANGUAGES.VI
+                                ? item.scheduleData.valueVi
+                                : item.scheduleData.valueEn}
+                          </button>
+                       ))
+                     : null}
+               </div>
+            </div>
          </div>
       );
    }
