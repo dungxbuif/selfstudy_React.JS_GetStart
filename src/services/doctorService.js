@@ -61,7 +61,19 @@ const getAllDoctors = async () => {
 const saveInfoDoctor = async (dataInput) => {
    return new Promise(async (resolve, reject) => {
       try {
-         if (!dataInput.doctorId) {
+         //UPSERT MarkDown Table
+         if (
+            !dataInput.doctorId ||
+            !dataInput.contentHTML ||
+            !dataInput.contentMarkdown ||
+            !dataInput.description ||
+            !dataInput.selectedPrice ||
+            !dataInput.selectedPayment ||
+            !dataInput.selectedProvince ||
+            !dataInput.nameClinic ||
+            !dataInput.addressClinic ||
+            !dataInput.note
+         ) {
             resolve({
                code: 1,
                message: 'Missing parameters',
@@ -89,6 +101,33 @@ const saveInfoDoctor = async (dataInput) => {
                   doctor.updatedAt = new Date();
                   await doctor.save();
                }
+            }
+
+            //UPSERT DoctorInfor Table
+            let doctorInfo = null;
+            doctorInfo = await db.doctor_infos.findOne({
+               where: { doctorID: dataInput.doctorId },
+               raw: false,
+            });
+            if (doctorInfo) {
+               doctorInfo.priceId = dataInput.selectedPrice;
+               doctorInfo.paymentId = dataInput.selectedPayment;
+               doctorInfo.provinceId = dataInput.selectedProvince;
+               doctorInfo.nameClinic = dataInput.nameClinic;
+               doctorInfo.addressClinic = dataInput.addressClinic;
+               doctorInfo.note = dataInput.note;
+
+               doctorInfo.save();
+            } else {
+               doctorInfo = await db.doctor_infos.create({
+                  doctorId: dataInput.doctorId,
+                  priceId: dataInput.selectedPrice,
+                  paymentId: dataInput.selectedPayment,
+                  provinceId: dataInput.selectedProvince,
+                  nameClinic: dataInput.nameClinic,
+                  addressClinic: dataInput.addressClinic,
+                  note: dataInput.note,
+               });
             }
             resolve({
                code: 0,
@@ -122,6 +161,11 @@ const getDetailDoctorByID = async (doctorID) => {
                   model: db.Allcodes,
                   as: 'positionData',
                   attributes: ['valueVi', 'valueEn'],
+               },
+               {
+                  model: db.doctor_infos,
+                  as: 'doctorInfoData',
+                  exclude: ['id', 'doctorId'],
                },
             ],
             raw: false,

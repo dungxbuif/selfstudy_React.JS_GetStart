@@ -5,6 +5,7 @@ import './DetailDoctor.scss';
 import { getDoctorDetailInfo } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils/constant';
 import DoctorSchedule from './DoctorSchedule.js';
+import DoctorExtraInfo from './DoctorExtraInfo';
 class DetailDoctor extends Component {
    constructor(props) {
       super(props);
@@ -68,7 +69,9 @@ class DetailDoctor extends Component {
                      <div className="content-left w-50 py-2">
                         <DoctorSchedule doctorId={detailDoctor.id} />
                      </div>
-                     <div className="content-right w-50"></div>
+                     <div className="content-right w-50">
+                        <DoctorExtraInfo />
+                     </div>
                   </div>
                </div>
 

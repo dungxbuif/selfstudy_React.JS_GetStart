@@ -2,25 +2,15 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-   class doctor_info extends Model {
+   class doctor_infos extends Model {
       static associate(models) {
-         // doctor_info.belongsTo(models.Allcodes, {
-         //    foreignKey: 'positionId',
-         //    targetKey: 'keyMap',
-         //    as: 'positionData',
-         // });
-         // doctor_info.belongsTo(models.Allcodes, {
-         //    foreignKey: 'gender',
-         //    targetKey: 'keyMap',
-         //    as: 'genderData',
-         // });
-         // doctor_info.hasOne(models.Markdown, {
-         //    foreignKey: 'doctorId',
-         //    as: 'markDownData',
-         // });
+         doctor_infos.belongsTo(models.User, {
+            foreignKey: 'doctorId',
+            as: 'doctorInfoData',
+         });
       }
    }
-   doctor_info.init(
+   doctor_infos.init(
       {
          doctorId: DataTypes.INTEGER,
          priceId: DataTypes.STRING,
@@ -33,8 +23,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       {
          sequelize,
-         modelName: 'doctor_info',
+         modelName: 'doctor_infos',
       },
    );
-   return doctor_info;
+   return doctor_infos;
 };

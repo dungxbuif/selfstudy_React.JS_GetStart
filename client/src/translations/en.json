@@ -73,7 +73,13 @@
             "choose-doctor": "Choose doctors",
             "doctor-info": "Doctors' information",
             "add": "Add new doctor",
-            "save": "Save doctor"
+            "save": "Save doctor",
+            "price": "Price of medical examination",
+            "payment": "Payment",
+            "province": "Provine",
+            "clinic-name": "Clinic name",
+            "clinic-address": "Clinic address",
+            "note": "Notes"
         }
     }
 }
