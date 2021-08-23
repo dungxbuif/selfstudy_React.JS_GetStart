@@ -203,7 +203,6 @@ const bulkCreateSchedule = async (dataReq) => {
             schedlude.forEach((item) => {
                item.maxNumber = MAX_NUMBER_SCHEDULE;
             });
-            console.log(dataReq.arrData[0].date);
             let existing = await db.Schedule.findAll({
                where: { doctorId: +dataReq.arrData[0].doctorId, date: dataReq.arrData[0].date },
                attributes: ['timeType', 'date', 'doctorId', 'maxNumber'],
@@ -320,6 +319,50 @@ const getExtraDoctorInfoById = async (doctorID) => {
       }
    });
 };
+
+const getProfileDoctorInfoById = async (doctorID) => {
+   return new Promise(async (resolve, reject) => {
+      try {
+         if (!doctorID)
+            resolve({
+               code: -1,
+               message: 'Missing required prameters',
+            });
+
+         const data = await db.User.findOne({
+            where: { id: doctorID },
+            attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'gender'] },
+            include: [
+               {
+                  model: db.Allcodes,
+                  as: 'positionData',
+                  attributes: ['valueVi', 'valueEn'],
+               },
+               {
+                  model: db.Markdown,
+                  as: 'markDownData',
+               },
+            ],
+            raw: false,
+            nest: true,
+         });
+
+         if (data && data.image) {
+            data.image = new Buffer(data.image, 'base64').toString('binary');
+         }
+
+         if (!data) data = {};
+
+         resolve({
+            code: 0,
+            data,
+         });
+      } catch (e) {
+         reject(e);
+      }
+   });
+};
+
 module.exports = {
    getTopDoctorHome,
    getAllDoctors,
@@ -328,4 +371,5 @@ module.exports = {
    bulkCreateSchedule,
    getScheduleDoctorByDate,
    getExtraDoctorInfoById,
+   getProfileDoctorInfoById,
 };

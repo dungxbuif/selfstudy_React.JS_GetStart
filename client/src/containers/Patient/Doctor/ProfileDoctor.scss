@@ -1,0 +1,26 @@
+.intro-doctor {
+   .intro-doctor-left {
+      padding-right: 16px;
+
+      .intro-doctor-image {
+         border-radius: 50%;
+         width: 120px;
+         height: 120px;
+         background-position: center;
+         background-size: contain;
+      }
+   }
+
+   .intro-doctor-right {
+      width: 520px;
+      padding-left: 10px;
+      .info-top {
+         font-size: 20px;
+         font-weight: 700;
+      }
+
+      .info-bottom {
+         padding-top: 10px;
+      }
+   }
+}
