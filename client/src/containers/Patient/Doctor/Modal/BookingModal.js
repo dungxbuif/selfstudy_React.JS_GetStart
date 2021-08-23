@@ -33,7 +33,58 @@ class BookingModal extends Component {
                         <i onClick={this.props.toggleModal} className="fas fa-times"></i>
                      </span>
                   </div>
-                  <div className="booking-modal-body"></div>
+                  <div className="booking-modal-body">
+                     <div className="doctor-info"></div>
+                     <div className="price">Giá khám 500,000VNĐ</div>
+                     <div className="row">
+                        <div className="col-6 form-group">
+                           <label>Họ tên</label>
+                           <input className=" form-control" />
+                        </div>
+                        <div className="col-6 form-group">
+                           <label>Số đện thoại</label>
+                           <input className=" form-control" />
+                        </div>
+                        <div className="col-6 form-group">
+                           <label>Email</label>
+                           <input className=" form-control" />
+                        </div>
+                        <div className="col-6 form-group">
+                           <label>Địa chỉ liên hệ</label>
+                           <input className=" form-control" />
+                        </div>
+                        <div className="col-12 form-group">
+                           <label>Lý do khám</label>
+                           <input className=" form-control" />
+                        </div>
+                        <div className="col-6">
+                           <div>Đặt cho ai</div>
+                           <div class="form-check form-check-inline">
+                              <span>
+                                 <input class="form-check-input" type="radio" value="option1" />
+                                 Nam
+                              </span>
+                              <span>
+                                 <input class="form-check-input" type="radio" value="option1" />
+                                 Nữ
+                              </span>
+                           </div>
+                        </div>
+                        <div className="col-6">
+                           <div>Đặt cho ai</div>
+                           <div class="form-check form-check-inline">
+                              <span>
+                                 <input class="form-check-input" type="radio" value="option1" />
+                                 Nam
+                              </span>
+                              <span>
+                                 <input class="form-check-input" type="radio" value="option1" />
+                                 Nữ
+                              </span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
                   <div className="booking-modal-footer">
                      <button className="btn btn-primary">Xác nhận</button>
                      <button className="btn btn-danger">Hủy</button>
