@@ -12,7 +12,6 @@ class HomeHeader extends Component {
    };
 
    returnHome = () => {
-      console.log('sadasd');
       if (this.props.history) {
          this.props.history.push('/home');
       }

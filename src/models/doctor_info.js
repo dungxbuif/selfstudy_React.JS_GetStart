@@ -8,6 +8,21 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'doctorId',
             as: 'doctorInfoData',
          });
+         doctor_infos.belongsTo(models.Allcodes, {
+            foreignKey: 'priceId',
+            targetKey: 'keyMap',
+            as: 'priceData',
+         });
+         doctor_infos.belongsTo(models.Allcodes, {
+            foreignKey: 'paymentId',
+            targetKey: 'keyMap',
+            as: 'paymentData',
+         });
+         doctor_infos.belongsTo(models.Allcodes, {
+            foreignKey: 'provinceId',
+            targetKey: 'keyMap',
+            as: 'provinceData',
+         });
       }
    }
    doctor_infos.init(

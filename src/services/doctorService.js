@@ -272,6 +272,54 @@ const getScheduleDoctorByDate = async (doctorId, date) => {
    });
 };
 
+const getExtraDoctorInfoById = async (doctorID) => {
+   return new Promise(async (resolve, reject) => {
+      try {
+         if (!doctorID)
+            resolve({
+               code: -1,
+               message: 'Missing required prameters',
+            });
+
+         const data = await db.doctor_infos.findOne({
+            where: { doctorID },
+            attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'gender'] },
+            include: [
+               {
+                  model: db.Allcodes,
+                  as: 'priceData',
+                  attributes: ['valueVi', 'valueEn'],
+               },
+               {
+                  model: db.Allcodes,
+                  as: 'paymentData',
+                  attributes: ['valueVi', 'valueEn'],
+               },
+               {
+                  model: db.Allcodes,
+                  as: 'provinceData',
+                  attributes: ['valueVi', 'valueEn'],
+               },
+            ],
+            raw: false,
+            nest: true,
+         });
+
+         if (data && data.image) {
+            data.image = new Buffer(data.image, 'base64').toString('binary');
+         }
+
+         if (!data) data = {};
+
+         resolve({
+            code: 0,
+            data,
+         });
+      } catch (e) {
+         reject(e);
+      }
+   });
+};
 module.exports = {
    getTopDoctorHome,
    getAllDoctors,
@@ -279,4 +327,5 @@ module.exports = {
    getDetailDoctorByID,
    bulkCreateSchedule,
    getScheduleDoctorByDate,
+   getExtraDoctorInfoById,
 };

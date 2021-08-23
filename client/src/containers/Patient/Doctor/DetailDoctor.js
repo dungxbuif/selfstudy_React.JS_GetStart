@@ -23,14 +23,12 @@ class DetailDoctor extends Component {
             this.setState({
                detailDoctor: res.data,
             });
-            console.log(res.data);
          }
       }
    }
 
    render() {
       let detailDoctor = this.state.detailDoctor;
-      console.log(detailDoctor);
       let language = this.props.language;
       let nameVi = '',
          nameEn = '';
@@ -70,7 +68,7 @@ class DetailDoctor extends Component {
                         <DoctorSchedule doctorId={detailDoctor.id} />
                      </div>
                      <div className="content-right w-50">
-                        <DoctorExtraInfo />
+                        <DoctorExtraInfo doctorId={detailDoctor.id} />
                      </div>
                   </div>
                </div>

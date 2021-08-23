@@ -1,0 +1,39 @@
+.booking-modal-container {
+   .booking-modal-content {
+      height: 500px;
+      display: flex;
+      flex-direction: column;
+      div {
+         padding: 10px;
+      }
+
+      .booking-modal-header {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         border-bottom: 2px solid #ddd;
+         span {
+            text-transform: uppercase;
+            font-size: 16px;
+            font-weight: 600;
+         }
+
+         i {
+            cursor: pointer;
+         }
+
+         i:hover {
+            opacity: 0.7;
+         }
+      }
+      .booking-modal-body {
+         flex: 1;
+      }
+      .booking-modal-footer {
+         border-top: 2px solid #ddd;
+         gap: 10px;
+         display: flex;
+         justify-content: flex-end;
+      }
+   }
+}

@@ -65,6 +65,12 @@
     "patient": {
         "detail-doctor": {
             "schesule": "Medical examination schedule"
+        },
+        "extra-info": {
+            "address-title": "Clinic address",
+            "medical-price": "Examination price: ",
+            "showmore": "View detail",
+            "hide": "hide price list"
         }
     },
     "admin": {
