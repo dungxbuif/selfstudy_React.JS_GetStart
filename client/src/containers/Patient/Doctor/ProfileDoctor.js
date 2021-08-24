@@ -4,6 +4,8 @@ import './ProfileDoctor.scss';
 import { LANGUAGES } from '../../../utils';
 import { FormattedMessage } from 'react-intl';
 import { getProfileDoctorInfoById } from '../../../services/userService';
+import _ from 'lodash';
+import moment from 'moment';
 
 class ProfileDoctor extends Component {
    constructor(props) {
@@ -40,8 +42,29 @@ class ProfileDoctor extends Component {
       }
    }
 
+   renderTime = (dataSchedule) => {
+      let { language } = this.props;
+      if (dataSchedule && !_.isEmpty(dataSchedule)) {
+         let date =
+            language === LANGUAGES.VI
+               ? moment().format('dddd - DD/MM/YYYY')
+               : moment().format('MM//DD/YYYY');
+
+         if (language === LANGUAGES.VI) date = date.charAt(0).toUpperCase() + date.slice(1);
+
+         return (
+            <>
+               <div>{date}</div>
+            </>
+         );
+      }
+
+      return null;
+   };
+
    render() {
       let { dataProfile } = this.state;
+      let { iShowProfile, dataSchedule } = this.props;
       let language = this.props.language;
       let nameVi = '',
          nameEn = '';
@@ -60,11 +83,15 @@ class ProfileDoctor extends Component {
             </div>
             <div className="intro-doctor-right">
                <div className="info-top">{language === LANGUAGES.VI ? nameVi : nameEn}</div>
-               <div className="info-bottom">
-                  {dataProfile.markDownData && dataProfile.markDownData.description && (
-                     <span>{dataProfile.markDownData.description}</span>
-                  )}
-               </div>
+               {iShowProfile ? (
+                  <div className="info-bottom">
+                     {dataProfile.markDownData && dataProfile.markDownData.description && (
+                        <span>{dataProfile.markDownData.description}</span>
+                     )}
+                  </div>
+               ) : (
+                  <>{this.renderTime(dataSchedule)}</>
+               )}
             </div>
          </div>
       );

@@ -37,9 +37,13 @@ class BookingModal extends Component {
                   </div>
                   <div className="booking-modal-body">
                      <div className="doctor-info">
-                        <ProfileDoctor doctorId={doctorId} />
+                        <ProfileDoctor
+                           doctorId={doctorId}
+                           iShowProfile={false}
+                           dataSchedule={dataSchedule}
+                        />
                      </div>
-                     <div className="price">
+                     {/* <div className="price">
                         <FormattedMessage id="patient.extra-info.medical-price" />
                         {dataSchedule && dataSchedule.priceData && IS_LANG_VI ? (
                            <NumberFormat
@@ -58,7 +62,7 @@ class BookingModal extends Component {
                               suffix=" USD"
                            />
                         ) : null}
-                     </div>
+                     </div> */}
                      <div className="row">
                         <div className="col-6 form-group">
                            <label>Họ tên</label>
