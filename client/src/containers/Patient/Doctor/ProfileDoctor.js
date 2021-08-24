@@ -16,10 +16,12 @@ class ProfileDoctor extends Component {
    }
 
    async componentDidMount() {
-      let data = await this.getDoctorInfo(this.props.doctorId);
-      this.setState({
-         dataProfile: data,
-      });
+      if (this.props.doctorId) {
+         let data = await this.getDoctorInfo(this.props.doctorId);
+         this.setState({
+            dataProfile: data,
+         });
+      }
    }
 
    getDoctorInfo = async (id) => {
@@ -43,18 +45,20 @@ class ProfileDoctor extends Component {
    }
 
    renderTime = (dataSchedule) => {
+      console.log(dataSchedule);
       let { language } = this.props;
+      let IS_LANG_VI = language === LANGUAGES.VI;
       if (dataSchedule && !_.isEmpty(dataSchedule)) {
-         let date =
-            language === LANGUAGES.VI
-               ? moment().format('dddd - DD/MM/YYYY')
-               : moment().format('MM//DD/YYYY');
-
-         if (language === LANGUAGES.VI) date = date.charAt(0).toUpperCase() + date.slice(1);
-
+         let time = IS_LANG_VI
+            ? dataSchedule.scheduleData.valueVi
+            : dataSchedule.scheduleData.valueEn;
+         let date = IS_LANG_VI
+            ? moment(dataSchedule.date).format('dddd - DD/MM/YYYY')
+            : moment(dataSchedule.date).locale('en').format('dddd - MM/DD/YYYY');
+         if (IS_LANG_VI) date = date.charAt(0).toUpperCase() + date.slice(1);
          return (
             <>
-               <div>{date}</div>
+               <div>{`${time} - ${date}`}</div>
             </>
          );
       }
