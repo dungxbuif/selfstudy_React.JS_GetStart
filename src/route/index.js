@@ -3,6 +3,7 @@ const homeController = require('../controllers/homeController');
 const userController = require('../controllers/userController');
 const doctorController = require('../controllers/doctorController');
 const allCodeController = require('../controllers/allCodeController');
+const patientController = require('../controllers/patientController');
 let router = express.Router();
 
 let initWebRoutes = (app) => {
@@ -22,6 +23,8 @@ let initWebRoutes = (app) => {
    router.put('/api/update-user', userController.handleUpdateUser);
    router.delete('/api/delete-user', userController.handleDeleteUsers);
 
+   router.get('/api/get-allcode-by-type', allCodeController.getAllCodeServices);
+
    router.get('/api/get-top-doctor-home', doctorController.getTopDoctorHome);
    router.get('/api/get-all-doctors', doctorController.getAllDoctors);
    router.post('/api/post-info-doctors', doctorController.postInfoDoctor);
@@ -32,6 +35,8 @@ let initWebRoutes = (app) => {
    router.get('/api/get-profile-doctor-info-by-id', doctorController.getProfileDoctorInfoById);
 
    router.get('/api/get-allcode-by-type', allCodeController.getAllCodeServices);
+
+   router.post('/api/patient-book-appointment', patientController.bookApppointment);
 
    return app.use('/', router);
 };
