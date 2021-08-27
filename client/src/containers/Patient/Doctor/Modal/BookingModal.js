@@ -6,11 +6,28 @@ import './BookingModal.scss';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import NumberFormat from 'react-number-format';
 import ProfileDoctor from '../ProfileDoctor';
-
+import DatePicker from '../../../../components/Input/DatePicker';
+import * as actions from '../../../../store/actions';
 class BookingModal extends Component {
    constructor(props) {
       super(props);
-      this.state = {};
+      this.state = {
+         fullName: '',
+         phoneNumber: '',
+         email: '',
+         address: '',
+         reason: '',
+         birthday: '',
+         gender: '',
+         doctorId: '',
+         selectedGender: '',
+      };
+   }
+   handleOnchane(event, stateKey) {
+      let valueInput = event.target.value;
+      let tmpState = { ...this.state };
+      tmpState[stateKey] = valueInput;
+      this.setState({ ...tmpState });
    }
 
    componentDidMount() {}
@@ -20,11 +37,19 @@ class BookingModal extends Component {
       }
    }
 
+   handleOnChangeDatePicker = (date) => {
+      this.setState({
+         birthday: date[0],
+      });
+   };
+
    render() {
       const { isOpenModal, toggleModal, dataSchedule } = this.props;
       let IS_LANG_VI = this.props.language === LANGUAGES.VI ? true : false;
       let doctorId =
          dataSchedule && Object.entries(dataSchedule).length ? dataSchedule.doctorId : '';
+      let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+
       return (
          <>
             <Modal centered isOpen={isOpenModal} className="booking-modal-container" size="lg">
@@ -66,36 +91,52 @@ class BookingModal extends Component {
                      <div className="row">
                         <div className="col-6 form-group">
                            <label>Họ tên</label>
-                           <input className=" form-control" />
+                           <input
+                              className=" form-control"
+                              value={this.state.fullName}
+                              onChange={(event) => this.handleOnchane(event, 'fullName')}
+                           />
                         </div>
                         <div className="col-6 form-group">
                            <label>Số đện thoại</label>
-                           <input className=" form-control" />
+                           <input
+                              className=" form-control"
+                              value={this.state.phoneNumber}
+                              onChange={() => this.handleOnchane('phoneNumber')}
+                           />
                         </div>
                         <div className="col-6 form-group">
                            <label>Email</label>
-                           <input className=" form-control" />
+                           <input
+                              className=" form-control"
+                              value={this.state.email}
+                              onChange={() => this.handleOnchane('email')}
+                           />
                         </div>
                         <div className="col-6 form-group">
                            <label>Địa chỉ liên hệ</label>
-                           <input className=" form-control" />
+                           <input
+                              className=" form-control"
+                              value={this.state.address}
+                              onChange={() => this.handleOnchane('address')}
+                           />
                         </div>
                         <div className="col-12 form-group">
                            <label>Lý do khám</label>
-                           <input className=" form-control" />
+                           <input
+                              className=" form-control"
+                              value={this.state.reason}
+                              onChange={() => this.handleOnchane('reason')}
+                           />
                         </div>
-                        <div className="col-6">
-                           <div>Đặt cho ai</div>
-                           <div className="form-check form-check-inline">
-                              <span>
-                                 <input className="form-check-input" type="radio" value="option1" />
-                                 Nam
-                              </span>
-                              <span>
-                                 <input className="form-check-input" type="radio" value="option1" />
-                                 Nữ
-                              </span>
-                           </div>
+                        <div className="col-6 form-group">
+                           <div>Ngày sinh</div>
+                           <DatePicker
+                              className=""
+                              onChange={() => this.handleOnChangeDatePicker}
+                              selected={this.state.currentDate}
+                              minDate={yesterday}
+                           />
                         </div>
                         <div className="col-6">
                            <div>Đặt cho ai</div>
