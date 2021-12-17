@@ -60,7 +60,7 @@ class Specialty extends Component {
                               key={index}
                               className="specialty-body text-left "
                               onClick={() => this.handleViewDetailDoctor(item)}>
-                              <img src={new Buffer(item.image, 'base64').toString('binary')} />
+                              <img src={Buffer.from(item.image, 'base64').toString('binary')} />
                               <div>{language === LANGUAGES.VI ? nameVi : nameEn}</div>
                            </div>
                         );

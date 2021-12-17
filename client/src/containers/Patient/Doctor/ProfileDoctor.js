@@ -45,7 +45,6 @@ class ProfileDoctor extends Component {
    }
 
    renderTime = (dataSchedule) => {
-      console.log(dataSchedule);
       let { language } = this.props;
       let IS_LANG_VI = language === LANGUAGES.VI;
       if (dataSchedule && !_.isEmpty(dataSchedule)) {

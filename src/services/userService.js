@@ -117,7 +117,7 @@ const createNewUser = (data) => {
          }
 
          let hashPasswordFromBcrypt = await hashUserPassword(data.password);
-         await db.User.create({
+         const user = await db.User.create({
             email: data.email,
             password: hashPasswordFromBcrypt,
             firstName: data.firstName,
@@ -131,6 +131,7 @@ const createNewUser = (data) => {
          });
          resolve({
             code: 0,
+            data: user,
             message: 'OK',
          });
          return;

@@ -173,7 +173,7 @@ const getDetailDoctorByID = async (doctorID) => {
          });
 
          if (data && data.image) {
-            data.image = new Buffer(data.image, 'base64').toString('binary');
+            data.image = Buffer.from(data.image, 'base64').toString('binary');
          }
 
          if (!data) data = {};
@@ -256,7 +256,7 @@ const getScheduleDoctorByDate = async (doctorId, date) => {
          });
 
          if (data && data.image) {
-            data.image = new Buffer(data.image, 'base64').toString('binary');
+            data.image = Buffer.from(data.image, 'base64').toString('binary');
          }
 
          if (!data) data = [];
@@ -305,7 +305,7 @@ const getExtraDoctorInfoById = async (doctorID) => {
          });
 
          if (data && data.image) {
-            data.image = new Buffer(data.image, 'base64').toString('binary');
+            data.image = Buffer.from(data.image, 'base64').toString('binary');
          }
 
          if (!data) data = {};
@@ -348,7 +348,7 @@ const getProfileDoctorInfoById = async (doctorID) => {
          });
 
          if (data && data.image) {
-            data.image = new Buffer(data.image, 'base64').toString('binary');
+            data.image = Buffer.from(data.image, 'base64').toString('binary');
          }
 
          if (!data) data = {};

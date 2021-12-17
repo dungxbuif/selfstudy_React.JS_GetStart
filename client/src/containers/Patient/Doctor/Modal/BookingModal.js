@@ -7,6 +7,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import NumberFormat from 'react-number-format';
 import ProfileDoctor from '../ProfileDoctor';
 import DatePicker from '../../../../components/Input/DatePicker';
+import Select from 'react-select';
 import * as actions from '../../../../store/actions';
 class BookingModal extends Component {
    constructor(props) {
@@ -23,17 +24,23 @@ class BookingModal extends Component {
          selectedGender: '',
       };
    }
-   handleOnchane(event, stateKey) {
+   handleOnChange(event, stateKey) {
       let valueInput = event.target.value;
       let tmpState = { ...this.state };
       tmpState[stateKey] = valueInput;
       this.setState({ ...tmpState });
    }
 
-   componentDidMount() {}
+   componentDidMount() {
+      this.setState({ gender: this.buildGenderformat() });
+   }
 
    componentDidUpdate(prevProprs, prevStates, snapshot) {
       if (this.props.language !== prevProprs.language) {
+         this.setState({ gender: this.buildGenderformat() });
+      }
+      if (this.props.dataSchedule !== prevProprs.dataSchedule) {
+         this.setState({ doctorId: this.props.dataSchedule.doctorId });
       }
    }
 
@@ -41,6 +48,36 @@ class BookingModal extends Component {
       this.setState({
          birthday: date[0],
       });
+   };
+
+   buildGenderformat = () => {
+      let IS_LANG_VI = this.props.language === LANGUAGES.VI;
+      let data = [
+         {
+            keyMap: 'M',
+            valueEn: 'Male',
+            valueVi: 'Nam',
+         },
+         {
+            keyMap: 'F',
+            valueEn: 'Female',
+            valueVi: 'Nữ',
+         },
+      ];
+      return data.map((item) => ({
+         value: item.keyMap,
+         label: IS_LANG_VI ? item.valueVi : item.valueEn,
+      }));
+   };
+
+   handleChange = (selectedOption) => {
+      this.setState({
+         selectedGender: selectedOption,
+      });
+   };
+
+   handleConfirmed = () => {
+      console.log(this.state);
    };
 
    render() {
@@ -94,7 +131,7 @@ class BookingModal extends Component {
                            <input
                               className=" form-control"
                               value={this.state.fullName}
-                              onChange={(event) => this.handleOnchane(event, 'fullName')}
+                              onChange={(event) => this.handleOnChange(event, 'fullName')}
                            />
                         </div>
                         <div className="col-6 form-group">
@@ -102,7 +139,7 @@ class BookingModal extends Component {
                            <input
                               className=" form-control"
                               value={this.state.phoneNumber}
-                              onChange={() => this.handleOnchane('phoneNumber')}
+                              onChange={(event) => this.handleOnChange(event, 'phoneNumber')}
                            />
                         </div>
                         <div className="col-6 form-group">
@@ -110,7 +147,7 @@ class BookingModal extends Component {
                            <input
                               className=" form-control"
                               value={this.state.email}
-                              onChange={() => this.handleOnchane('email')}
+                              onChange={(event) => this.handleOnChange(event, 'email')}
                            />
                         </div>
                         <div className="col-6 form-group">
@@ -118,7 +155,7 @@ class BookingModal extends Component {
                            <input
                               className=" form-control"
                               value={this.state.address}
-                              onChange={() => this.handleOnchane('address')}
+                              onChange={(event) => this.handleOnChange(event, 'address')}
                            />
                         </div>
                         <div className="col-12 form-group">
@@ -126,7 +163,7 @@ class BookingModal extends Component {
                            <input
                               className=" form-control"
                               value={this.state.reason}
-                              onChange={() => this.handleOnchane('reason')}
+                              onChange={(event) => this.handleOnChange(event, 'reason')}
                            />
                         </div>
                         <div className="col-6 form-group">
@@ -138,23 +175,20 @@ class BookingModal extends Component {
                               minDate={yesterday}
                            />
                         </div>
-                        <div className="col-6">
-                           <div>Đặt cho ai</div>
-                           <div className="form-check form-check-inline">
-                              <span>
-                                 <input className="form-check-input" type="radio" value="option1" />
-                                 Nam
-                              </span>
-                              <span>
-                                 <input className="form-check-input" type="radio" value="option1" />
-                                 Nữ
-                              </span>
-                           </div>
+                        <div className="col-6 form-group">
+                           <label>Ngày sinh</label>
+                           <Select
+                              value={this.state.selectedGender}
+                              onChange={this.handleChange}
+                              options={this.state.gender}
+                           />
                         </div>
                      </div>
                   </div>
                   <div className="booking-modal-footer">
-                     <button className="btn btn-primary">Xác nhận</button>
+                     <button className="btn btn-primary" onClick={() => this.handleConfirmed()}>
+                        Xác nhận
+                     </button>
                      <button className="btn btn-danger" onClick={toggleModal}>
                         Hủy
                      </button>
